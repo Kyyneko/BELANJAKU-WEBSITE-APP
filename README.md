@@ -22,6 +22,7 @@ Add, Commit, dan Push Perubahan Setelah menyelesaikan pekerjaan atau membuat per
     git push origin master
 
 **Peringatan Saat Mengedit File**
+
 Selalu perhatikan peringatan saat melakukan pengeditan file. Pastikan Anda melakukan pull terbaru sebelum push untuk menghindari konflik dengan kode yang telah diubah oleh anggota tim lainnya.
 
 Catatan Penting Pull Terlebih Dahulu: Sebelum melakukan push, pastikan untuk melakukan pull terbaru dari repositori utama. Pastikan Kualitas Kode: Sebelum melakukan push, pastikan bahwa perubahan Anda telah diuji dan memenuhi standar kualitas kode. Hindari Konflik: Selalu perhatikan peringatan konflik saat melakukan pull atau push. Selesaikan konflik dengan menggabungkan perubahan dengan bijaksana. Dengan mengikuti langkah-langkah di atas, Anda dapat mengelola proyek secara efisien dan berkolaborasi dengan anggota tim secara harmonis.
