@@ -1,0 +1,54 @@
+.bg {
+  height: 100vh;
+  background: #CD432F;
+}
+
+.custom-container {
+  margin-top: 4em;
+}
+
+.custom-text {
+  color: #fff;
+  font-size: 5em;
+  margin-top: -0.1em;
+  font-weight: bold;
+}
+
+.custom-paragraph {
+  color: #fff;
+  margin-top: 2em;
+}
+
+.custom-button {
+  padding: 10px 20px; /* Adjust padding for desired button size */
+  border-radius: 20px;
+  margin-top: 2em;
+  max-width: 200px; /* Set a maximum width for the button */
+  width: auto; /* Ensure the button width is auto */
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.icon {
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #CD432F;
+}
+
+.line {
+  flex-grow: 1;
+  height: 3px;
+  background-color: white;
+  margin-left: 5px;
+  margin-top: 17px;
+  width: 100%;
+  max-width: 500px;
+}

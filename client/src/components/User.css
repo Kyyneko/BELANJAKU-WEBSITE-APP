@@ -1,0 +1,102 @@
+.user {
+    width: 100%;
+    background-color: #CD432F;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.user .container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 4rem 0;
+}
+
+.user h2 {
+    font-size: 3rem;
+    text-align: center;
+    color: white;
+}
+
+.user .container .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; 
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.user .card {
+    border: 1px solid #eee;
+    background-color: #CD432F;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgb(0,0,0,.2);
+    padding: 1.5rem;
+    max-width: 350px;
+    width: 100%; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user img {
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    width: 100px; /* Atur ukuran gambar */
+    height: 100px;
+}
+
+.user .card p {
+    color: white;
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.user .card span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.user .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; 
+    margin-top: 1rem;
+}
+
+.user .btn {
+    background-color: white; 
+    color: #CD432F; 
+    border: 1px solid #CD432F; 
+    /* padding: 0.5rem 1.5rem; */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    min-width: 100px; 
+    text-align: center;
+}
+
+.user .btn:hover {
+    background-color: #CD432F; 
+    color: white; 
+}
+
+@media screen and (max-width: 940px) {
+    .user .container {
+        width: 90%;
+    }
+
+    .user .container .content {
+        flex-direction: column; 
+    }
+
+    .user .card {
+        max-width: 90%;
+        margin: 1rem auto; 
+    }
+}

@@ -1,0 +1,68 @@
+.register-container {
+    padding: 20px;
+    background-color: #CD432F;
+    border-radius: 5px;
+    width: 400px;
+    margin: 20px auto;
+    margin-top: 5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all items horizontally */
+  }
+  
+  .register-form h2 {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .register-form label {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Ensure label and input are stacked */
+  }
+  
+  .register-form input {
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Make inputs take the full width */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    background: #FFAE42;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Ensure the button is as wide as the inputs */
+    box-sizing: border-box;
+  }
+  
+  .btn:hover {
+    background: #FF9900;
+  }
+  
+  .toggle-form {
+    text-align: center;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .toggle-form a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .toggle-form a:hover {
+    text-decoration: underline;
+  }
+  

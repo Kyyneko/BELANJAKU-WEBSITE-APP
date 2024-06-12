@@ -1,0 +1,199 @@
+.produk {
+    width: 100%;
+    height: 100%;
+    background-color: #CD432F;
+    margin: auto;
+  }
+  
+  .produk .container2 {
+    width: 1240px;
+    margin: 0.1rem auto;
+    padding: 4rem 0rem;
+  }
+  
+  .produk h2 {
+    font-size: 3rem;
+    text-align: center;
+    color: white;
+  }
+  
+  .search {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .produk .container2 .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    margin: 4rem 0;
+  }
+  
+  .produk .card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgb(0, 0, 0, .2);
+    padding: 1rem;
+    background-color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .produk img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .produk .card h3 {
+    font-size: 1.2rem;
+    color: #CD432F;
+    margin: 0.5rem 0;
+  }
+  
+  .produk .card p {
+    color: #787878;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .social-icons2 {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .icon {
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .icon:hover {
+    color: #CD432F;
+  }
+  
+  .social-icons2 h3 {
+    color: white;
+  }
+  
+  .line {
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    margin: 1rem 0;
+  }
+  
+  /* Order form styles */
+  .order-form {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 500px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .order-form h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+    color: #CD432F;
+  }
+  
+  .order-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .order-form label {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .order-form input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .order-form button {
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+  }
+  
+  .order-form button[type="button"] {
+    background: #6c757d;
+  }
+  
+  .order-form button:hover {
+    background: #0056b3;
+  }
+  
+  .order-form button[type="button"]:hover {
+    background: #5a6268;
+  }
+  
+  .order-form button[type="submit"] {
+    background-color: #CD432F;
+  }
+  
+  .order-form button[type="submit"]:hover {
+    background-color: #a53627;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 940px) {
+    .produk .container2 {
+      width: 100%;
+    }
+  
+    .produk .container2 .content {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  
+    .produk .card {
+      max-width: 100%;
+      margin: 1rem;
+    }
+  
+    .order-form {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .order-form h2 {
+      font-size: 1.5rem;
+    }
+  
+    .order-form label {
+      font-size: 1rem;
+    }
+  
+    .order-form input {
+      font-size: 0.9rem;
+    }
+  
+    .order-form button {
+      font-size: 0.9rem;
+    }
+  }
+  

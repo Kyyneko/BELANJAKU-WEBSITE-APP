@@ -1,0 +1,39 @@
+.about1 {
+    background: url('./images/ecommerce.jpg');
+    margin: auto;
+    margin-top: 4em;
+    /* padding: 8rem 1rem 0 1rem; */
+    width: 100%;
+   
+    
+}
+.container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column; /* Untuk membuat konten berada dalam kolom */
+    max-width: 1200px;
+    margin: auto; /* Memberikan margin auto untuk memposisikan container di tengah */
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.about h2 {
+    font-size: 2rem;
+    color: brown;
+    text-align: center;
+}
+
+.about p {
+    text-align: center; 
+}
+
+.col-2 {
+    align-items: center;
+}
+
+.about button {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

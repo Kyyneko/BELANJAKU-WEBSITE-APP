@@ -1,0 +1,69 @@
+.profile-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #CD432F;
+  padding: 20px; /* Tambahkan padding */
+}
+
+.profile-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.profile-photo-placeholder {
+  width: 300px;
+  height: 200px;
+  background-color: #ff726f;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.profile-photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-photo-icon {
+  width: 100px;
+  height: 100px;
+  background: url('./images/admin.jpg') no-repeat center center;
+  background-size: contain;
+  margin-bottom: 10px;
+  border-radius: 50%; /* Ubah border-radius menjadi 50% untuk bentuk lingkaran */
+}
+
+.select-photo-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.social-icons4 {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.icon {
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #CD432F;
+}
+
+.social-icons4 h3 {
+  color: white;
+}

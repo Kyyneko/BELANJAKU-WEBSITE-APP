@@ -1,0 +1,85 @@
+.order-container {
+    background-color: #CD432F;
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin-top: 4em;
+  }
+  
+.title {
+    text-align: center;
+  }
+  
+  .search-bar {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px;
+    width: 80%;
+    /* margin-top: 10px; */
+  }
+  
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    color: black;
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+    border-radius: 8px;
+  }
+  
+  .order-image {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
+  
+  .order-button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .pagination span {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .social-icon {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .icon {
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .icon:hover {
+    color: #CD432F;
+  }
+
+  
