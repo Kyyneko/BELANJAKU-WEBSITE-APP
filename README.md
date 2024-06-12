@@ -1,9 +1,11 @@
 # GROUP_L-FINAL_PROJECT
 
 **Panduan Penggunaan Git**
+
 Pengenalan Repositori ini berisi panduan penggunaan Git untuk kolaborator proyek. Git adalah sistem kontrol versi yang populer digunakan untuk mengelola kode sumber dalam pengembangan perangkat lunak. Dokumen ini akan memberikan panduan singkat tentang cara menggunakan Git untuk kolaborasi dalam proyek.
 
 **Cara Penggunaan Git**
+
 Clone Repositori Untuk mulai berkontribusi dalam proyek, clone repositori ke lokal komputer Anda.
 
     git clone <url-repositori>
