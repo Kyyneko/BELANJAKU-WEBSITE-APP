@@ -15,8 +15,8 @@ Pull Sebelum memulai pekerjaan atau melakukan perubahan pada proyek, lakukan pul
 
 Lakukan Perubahan Buat perubahan yang diperlukan dalam proyek Anda.
 
-**Add, Commit, dan Push Perubahan Setelah menyelesaikan pekerjaan atau membuat perubahan yang Anda inginkan, lakukan add, commit, dan push perubahan tersebut ke repositori utama.
-**
+Add, Commit, dan Push Perubahan Setelah menyelesaikan pekerjaan atau membuat perubahan yang Anda inginkan, lakukan add, commit, dan push perubahan tersebut ke repositori utama.
+
     git add .
     git commit -m "Pesan commit Anda"
     git push origin master
