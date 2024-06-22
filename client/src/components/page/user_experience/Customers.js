@@ -14,7 +14,9 @@ const Customers = () => {
         <Row>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src={us1} alt="user1" />
+              <div className="crop-container">
+                <Card.Img variant="top" src={us1} alt="user1" />
+              </div>
               <Card.Body>
                 <Card.Title>Food & Drink</Card.Title>
                 <Card.Text>
@@ -27,7 +29,9 @@ const Customers = () => {
           </Col>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src={us2} alt="user2" />
+              <div className="crop-container">
+                <Card.Img variant="top" src={us2} alt="user2" />
+              </div>
               <Card.Body>
                 <Card.Title>Cosmetic</Card.Title>
                 <Card.Text>
@@ -40,14 +44,15 @@ const Customers = () => {
           </Col>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src={us3} alt="user3" />
+              <div className="crop-container">
+                <Card.Img variant="top" src={us3} alt="user3" />
+              </div>
               <Card.Body>
                 <Card.Title>Body Care</Card.Title>
                 <Card.Text>
                   A very professional financial advisor, who is true to his
                   word. John has demonstrated a high amount of integrity in the
-                  time I have known him, and he is fast to respond to my
-                  concerns.
+                  time I have known him
                 </Card.Text>
               </Card.Body>
             </Card>

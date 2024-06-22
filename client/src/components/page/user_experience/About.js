@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../../css/user_experince/About.css";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -15,9 +16,11 @@ const About = () => {
               Intense gives me the ability to advise international expatriates
               living in the middle east from where I live in USA.
             </p>
-            <Button variant="primary" className="explore-button">
-              LET'S GO EXPLORE
-            </Button>
+            <Link to="/Produk">
+              <Button variant="primary" className="explore-button">
+                LET'S GO EXPLORE
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Container>
