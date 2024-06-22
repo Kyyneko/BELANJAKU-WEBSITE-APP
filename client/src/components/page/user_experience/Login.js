@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "../../css/user_experince/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -24,7 +24,6 @@ const Login = () => {
 
       localStorage.setItem("token", access_token);
       localStorage.setItem("userId", user_id);
-      localStorage.setItem("username", username);
 
       Swal.fire({
         icon: "success",

@@ -1,0 +1,25 @@
+.produk {
+  padding-top: 30px; /* Add padding top to avoid overlap with fixed navbar */
+}
+
+.social-icons2 .icon {
+  transition: color 0.3s;
+}
+
+.social-icons2 .icon:hover {
+  color: #007bff;
+}
+
+.card {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.not-found-text {
+  font-size: 24px; /* Atur ukuran teks sesuai kebutuhan */
+}
+

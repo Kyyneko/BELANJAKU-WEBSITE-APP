@@ -15,18 +15,11 @@
 }
 
 .profile-photo-placeholder {
-  width: 200px; /* Adjust width for circular image */
-  height: 200px; /* Adjust height for circular image */
+  width: 300px;
+  height: 200px;
+  background-color: #ff726f;
   margin-right: 20px;
-  border-radius: 50%; /* Ubah border-radius menjadi 50% untuk bentuk lingkaran */
-  overflow: hidden; /* Ensure the image stays within the border */
-}
-
-.profile-photo-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%; /* Ensure the image is circular */
+  border-radius: 8px;
 }
 
 .profile-photo-section {
@@ -38,7 +31,7 @@
 .profile-photo-icon {
   width: 100px;
   height: 100px;
-  background: url('./images/admin.jpg') no-repeat center center;
+  background: url('../../images/user_experience/admin.jpg') no-repeat center center;
   background-size: contain;
   margin-bottom: 10px;
   border-radius: 50%; /* Ubah border-radius menjadi 50% untuk bentuk lingkaran */
@@ -52,17 +45,6 @@
   border-radius: 5px;
   background-color: white;
   cursor: pointer;
-}
-
-.profile-details {
-  margin-top: 10px;
-  text-align: left;
-}
-
-.profile-detail {
-  margin: 5px 0;
-  font-size: 1rem;
-  color: white;
 }
 
 .social-icons4 {

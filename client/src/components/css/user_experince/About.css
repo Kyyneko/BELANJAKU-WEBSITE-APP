@@ -1,0 +1,26 @@
+.about-section {
+    background: url('../../images/user_experience/ecommerce.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+  }
+  
+  .about-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  }
+  
+  .about-section h2,
+  .about-section p,
+  .explore-button {
+    position: relative;
+    z-index: 1;
+  }
+  

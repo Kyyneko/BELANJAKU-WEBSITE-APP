@@ -1,0 +1,17 @@
+.category {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+  }
+  
+  .category h2 {
+    font-size: 2.5rem;
+    color: #343a40;
+  }
+  
+  .line {
+    width: 100px;
+    height: 4px;
+    background-color: #007bff;
+    margin: 0 auto 20px;
+  }
+  

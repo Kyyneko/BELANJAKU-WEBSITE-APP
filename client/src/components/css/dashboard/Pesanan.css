@@ -1,0 +1,41 @@
+.pesanan {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .pesanan h2 {
+    color: #C0392B; /* Red color similar to the image */
+  }
+  
+  .pesanan table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .pesanan th, .pesanan td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .pesanan th {
+    background-color: #E4C59E; /* Light brown color */
+    color: black;
+  }
+  
+  .pesanan tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .pesanan tr:hover {
+    background-color: #ddd;
+  }
+  
+  .pesanan td {
+    height: 20px;
+  }
+  
+  .pesanan .empty-row td {
+    background-color: #f9f9f9;
+  }
+  

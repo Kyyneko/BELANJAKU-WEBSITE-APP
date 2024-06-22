@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_cors import CORS
+from datetime import datetime
+from decimal import Decimal
 
 
 app = Flask(__name__)
@@ -44,6 +46,16 @@ class CustomerOrder(db.Model):
     order_date = db.Column(db.Date)
     status = db.Column(db.Boolean)
     total_purchases = db.Column(db.Integer)
+    def as_dict(self):
+        return {
+            'id_order': self.id_order,
+            'id_customer': self.id_customer,
+            'id_product': self.id_product,
+            'total_orders': self.total_orders,
+            'order_date': self.order_date.isoformat() if isinstance(self.order_date, datetime.date) else self.order_date,
+            'status': self.status,
+            'total_purchases': float(self.total_purchases) if isinstance(self.total_purchases, Decimal) else self.total_purchases
+        }
 
 class Purchases(db.Model):
     id_purchases = db.Column(db.Integer, primary_key=True)
@@ -265,6 +277,22 @@ def add_order():
     db.session.add(new_order)
     db.session.commit()
     return jsonify(new_order.as_dict()), 201
+
+@app.route('/api/orders/<int:id_order>', methods=['GET'])
+@jwt_required()
+def get_order_by_id(id_order):
+    order = CustomerOrder.query.get(id_order)
+    if order:
+        product = Product.query.get(order.id_product)
+        if product:
+            order_data = order.as_dict()
+            order_data['product_name'] = product.name_product
+            return jsonify(order_data)
+        else:
+            return jsonify({"message": "Product not found"}), 404
+    else:
+        return jsonify({"message": "Order not found"}), 404
+
 
 @app.route('/api/orders/<int:id_order>', methods=['PUT'])
 @jwt_required()

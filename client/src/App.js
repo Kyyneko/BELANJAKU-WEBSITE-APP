@@ -6,22 +6,22 @@ import {
   useLocation,
 } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import Navbar from "./components/Navbar";
-import Home from "./components/home";
-import About from "./components/About2";
-import Produk from "./components/Produk";
-import User from "./components/User";
-import Order from "./components/Order";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Profile from "./components/Profile";
-import "./App.css"; // tambahkan file CSS untuk animasi
+import Navbar from "./components/page/user_experience/Navbar";
+import Home from "./components/page/user_experience/home";
+import About from "./components/page/user_experience/About2";
+import Produk from "./components/page/user_experience/Produk";
+import User from "./components/page/user_experience/User";
+import Order from "./components/page/user_experience/Order";
+import Login from "./components/page/user_experience/Login";
+import Register from "./components/page/user_experience/Register";
+import Profile from "./components/page/user_experience/Profile";
+import "./App.css"; // Import file CSS untuk animasi
 
 const App = () => {
   const location = useLocation();
 
   return (
-    <div>
+    <div className="app-container">
       <Navbar />
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="fade" timeout={300}>

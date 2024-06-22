@@ -1,0 +1,41 @@
+.transaksi {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .transaksi h2 {
+    color: #C0392B; /* Red color similar to the image */
+  }
+  
+  .transaksi table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .transaksi th, .transaksi td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .transaksi th {
+    background-color: #E4C59E; /* Light brown color */
+    color: black;
+  }
+  
+  .transaksi tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .transaksi tr:hover {
+    background-color: #ddd;
+  }
+  
+  .transaksi td {
+    height: 20px;
+  }
+  
+  .transaksi .empty-row td {
+    background-color: #f9f9f9;
+  }
+  

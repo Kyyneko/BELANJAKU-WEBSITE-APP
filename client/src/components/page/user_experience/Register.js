@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "../../css/user_experince/Register.css";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert
