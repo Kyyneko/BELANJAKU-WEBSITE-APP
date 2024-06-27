@@ -37,6 +37,7 @@ const Login = () => {
         localStorage.setItem("isOfficer", true); // Simpan informasi isOfficer di localStorage
         navigate("/dashboard"); // Arahkan ke dashboard jika isOfficer true
       } else {
+        localStorage.setItem("isOfficer", false); // Simpan informasi isOfficer di localStorage
         navigate("/");
       }
     } catch (error) {
