@@ -1,3 +1,4 @@
+// App.js
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -15,6 +16,7 @@ import Order from "./components/page/user_experience/Order";
 import Login from "./components/page/user_experience/Login";
 import Register from "./components/page/user_experience/Register";
 import Profile from "./components/page/user_experience/Profile";
+import Dashboard from "./components/page/user_experience/Dashboard";
 import "./App.css"; // Import file CSS untuk animasi
 
 const App = () => {
@@ -23,20 +25,23 @@ const App = () => {
   return (
     <div className="app-container">
       <Navbar />
-      <TransitionGroup>
-        <CSSTransition key={location.key} classNames="fade" timeout={300}>
-          <Routes location={location}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/order" element={<Order />} />
-            <Route path="/produk" element={<Produk />} />
-            <Route path="/user" element={<User />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </CSSTransition>
-      </TransitionGroup>
+      <div className="main-content">
+        <TransitionGroup>
+          <CSSTransition key={location.key} classNames="fade" timeout={300}>
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/order" element={<Order />} />
+              <Route path="/produk" element={<Produk />} />
+              <Route path="/user" element={<User />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/dashboard/*" element={<Dashboard />} />
+            </Routes>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
     </div>
   );
 };

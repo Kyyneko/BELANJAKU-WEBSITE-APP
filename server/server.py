@@ -116,19 +116,20 @@ def login():
     
     if username == 'admin' and password == 'admin':
         access_token = create_access_token(identity='admin')
-        return jsonify(access_token=access_token)
+        return jsonify(access_token=access_token, user_type='isOfficer')
     
     officer = Officer.query.filter_by(username=username).first()
     if officer and officer.password == password:
         access_token = create_access_token(identity=officer.id_officer)
-        return jsonify(access_token=access_token, user_id=officer.id_officer)
+        return jsonify(access_token=access_token, user_id=officer.id_officer, user_type='isOfficer')
     
     customer = Customer.query.filter_by(username=username).first()
     if customer and customer.password == password:
         access_token = create_access_token(identity=customer.id_customer)
-        return jsonify(access_token=access_token, user_id=customer.id_customer)
+        return jsonify(access_token=access_token, user_id=customer.id_customer, user_type='isCustomer')
     
     return jsonify({"msg": "Bad username or password"}), 401
+
 
 
 
@@ -217,6 +218,7 @@ def delete_product(id_product):
     db.session.delete(product)
     db.session.commit()
     return jsonify({"message": "Product deleted successfully"}), 200
+
 
 @app.route('/api/categories', methods=['GET'])
 @jwt_required()

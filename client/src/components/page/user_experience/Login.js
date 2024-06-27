@@ -20,7 +20,7 @@ const Login = () => {
         password,
       });
 
-      const { access_token, user_id } = response.data;
+      const { access_token, user_id, user_type } = response.data;
 
       localStorage.setItem("token", access_token);
       localStorage.setItem("userId", user_id);
@@ -33,7 +33,12 @@ const Login = () => {
         timer: 1500,
       });
 
-      navigate("/");
+      if (user_type === "isOfficer") {
+        localStorage.setItem("isOfficer", true); // Simpan informasi isOfficer di localStorage
+        navigate("/dashboard"); // Arahkan ke dashboard jika isOfficer true
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       setError("Invalid username or password");
     }

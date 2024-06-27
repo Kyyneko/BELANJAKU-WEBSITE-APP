@@ -45,9 +45,12 @@ const Navbar = () => {
   };
 
   const token = localStorage.getItem("token");
+  const isOfficer = localStorage.getItem("isOfficer") === "true"; // Convert ke boolean
 
   const handleProfileClick = () => {
-    if (token) {
+    if (token && isOfficer) {
+      navigate("/dashboard");
+    } else if (token) {
       navigate("/profile");
     } else {
       navigate("/user");
@@ -73,9 +76,11 @@ const Navbar = () => {
             <Nav.Link as={Link} to="/produk" onClick={closeMenu} className={isActive("/produk")}>
               Produk
             </Nav.Link>
-            <Nav.Link as={Link} to="/order" onClick={closeMenu} className={isActive("/order")}>
-              Order
-            </Nav.Link>
+            {!isOfficer && (
+              <Nav.Link as={Link} to="/order" onClick={closeMenu} className={isActive("/order")}>
+                Order
+              </Nav.Link>
+            )}
           </Nav>
           <Nav>
             <Nav.Item>

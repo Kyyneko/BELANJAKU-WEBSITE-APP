@@ -12,6 +12,7 @@ import {
   Card,
   Form,
 } from "react-bootstrap";
+import Swal from "sweetalert2";
 import "../../css/user_experince/Produk.css";
 
 const Produk = () => {
@@ -68,6 +69,23 @@ const Produk = () => {
   const handleClose = () => {
     setShowModal(false);
     setSelectedProduct(null);
+  };
+
+  const handleOrder = () => {
+    if (localStorage.getItem("isOfficer") === "true") {
+      Swal.fire({
+        icon: "error",
+        title: "Officer Tidak Dapat Melakukan Pemesanan",
+        text: "Anda tidak diizinkan untuk melakukan pemesanan produk.",
+      });
+    } else {
+      // Lakukan logika untuk melakukan pemesanan
+      // Contoh: Mengirimkan pesanan ke backend
+      console.log("Ordering product:", selectedProduct);
+      // Setelah berhasil melakukan pemesanan, Anda dapat menutup modal atau melakukan tindakan lainnya
+      setShowModal(false);
+      setSelectedProduct(null);
+    }
   };
 
   return (
@@ -149,7 +167,11 @@ const Produk = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          {isLoggedIn && <Button variant="primary">Order</Button>}
+          {isLoggedIn && (
+            <Button variant="primary" onClick={handleOrder}>
+              Order
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </div>
