@@ -303,24 +303,42 @@ def delete_customer(id_customer):
     db.session.commit()
     return jsonify({"message": "Customer deleted successfully"}), 200
 
-@app.route('/api/purchases', methods=['POST'])
-def create_purchase():
-    if request.method == 'POST':
-        data = request.json
-        
-        new_purchase = Purchases(
-            id_order=data['id_order'],
-            id_customer=data['id_customer'],
-            method=data['method'],
-            date=data['date']
-        )
+# Tambahkan route baru untuk mendapatkan semua pembelian
+@app.route('/api/purchases', methods=['GET'])
+@jwt_required()
+def get_all_purchases():
+    purchases = Purchases.query.all()
+    return jsonify([purchase.as_dict() for purchase in purchases])
 
-        try:
-            db.session.add(new_purchase)
-            db.session.commit()
-            return jsonify({'message': 'Purchases created successfully'}), 201
-        except:
-            return jsonify({'message': 'Failed to create Purchases'}), 500
+# Tambahkan route untuk menghapus pembelian berdasarkan ID
+@app.route('/api/purchases/<int:id_purchase>', methods=['DELETE'])
+@jwt_required()
+def delete_purchase(id_purchase):
+    purchase = Purchases.query.get_or_404(id_purchase)
+    db.session.delete(purchase)
+    db.session.commit()
+    return jsonify({"message": "Purchase deleted successfully"}), 200
+
+# Tambahkan route untuk membuat pembelian baru
+@app.route('/api/purchases', methods=['POST'])
+@jwt_required()
+def create_purchase():
+    data = request.json
+    
+    new_purchase = Purchases(
+        id_order=data['id_order'],
+        id_customer=data['id_customer'],
+        method=data['method'],
+        date=data['date']
+    )
+
+    try:
+        db.session.add(new_purchase)
+        db.session.commit()
+        return jsonify({'message': 'Purchases created successfully'}), 201
+    except:
+        return jsonify({'message': 'Failed to create Purchases'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
