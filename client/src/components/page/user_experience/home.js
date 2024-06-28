@@ -1,19 +1,17 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Import Link
+import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../../css/user_experince/home.css";
 
 const Home = () => {
   return (
-    <div className="bg">
-      <div className="custom-container">
-        <Container className="text-center py-5">
-          <Row className="justify-content-center align-items-center">
+    <div className="bg-gray-100 min-h-screen">
+      <div className="custom-container py-12">
+        <Container className="text-center">
+          <Row className="justify-center">
             <Col md={8}>
-              <h1 className="custom-text display-4 bold mt-4">
-                Let's Shopping
-              </h1>
-              <p className="custom-paragraph lead my-4">
+              <h1 className="text-4xl font-bold mt-4">Let's Shopping</h1>
+              <p className="text-lg my-4">
                 Lorem Ipsum adalah teks dummy dari industri percetakan dan
                 typesetting. Lorem Ipsum telah menjadi teks dummy standar
                 industri sejak 1500-an, ketika seorang pencetak tidak dikenal
@@ -22,12 +20,10 @@ const Home = () => {
                 melompat ke typesetting elektronik, tetap tidak berubah secara
                 esensial.
               </p>
-              <Link to="/About">
-                {" "}
-                {/* Menggunakan Link */}
-                <Button className="custom-button btn-light btn-lg my-2">
+              <Link to="/about">
+                <button className="bg-gray-800 text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2">
                   Explore Now
-                </Button>
+                </button>
               </Link>
             </Col>
           </Row>

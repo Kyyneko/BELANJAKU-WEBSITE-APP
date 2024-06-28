@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
-import "../../css/user_experince/Order.css"; // Pastikan file CSS ini di-import
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -21,9 +19,7 @@ const Order = () => {
         );
 
         console.log("Fetched Orders:", response.data);
-        setOrders(
-          Array.isArray(response.data) ? response.data : [response.data]
-        ); // Pastikan respons berbentuk array
+        setOrders([response.data]); // Pastikan respons berbentuk array
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -67,12 +63,6 @@ const Order = () => {
           </Col>
         </Row>
       )}
-      <div className="social-icon text-center mt-4">
-        <FaInstagram size={30} className="icon mx-2" />
-        <FaFacebook size={30} className="icon mx-2" />
-        <div className="line my-2"></div>
-        <h3>Belanjaku</h3>
-      </div>
     </Container>
   );
 };

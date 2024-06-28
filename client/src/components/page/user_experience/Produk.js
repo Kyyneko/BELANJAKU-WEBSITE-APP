@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import Picture from "../../images/user_experience/ecommerce.jpg";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Modal,
   Button,
@@ -14,7 +13,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom"; // Menggunakan useNavigate dari react-router-dom versi 6
+import { useNavigate } from "react-router-dom";
 import "../../css/user_experince/Produk.css";
 
 const Produk = () => {
@@ -24,7 +23,7 @@ const Produk = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const navigate = useNavigate(); // Menggunakan useNavigate untuk navigasi
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -159,7 +158,7 @@ const Produk = () => {
         setSelectedProduct(null);
         setPaymentMethod("");
 
-        navigate("/order"); // Mengarahkan ke "/order" setelah pesanan berhasil
+        navigate("/order");
       }
     } catch (error) {
       console.error("Error ordering product:", error);
@@ -187,31 +186,33 @@ const Produk = () => {
             <Col key={product.id_product}>
               <Card
                 onClick={() => handleProductClick(product)}
-                className="h-100 shadow"
+                className="h-100 shadow-lg rounded-lg overflow-hidden"
               >
                 <Card.Img variant="top" src={Picture} alt="Product image" />
-
-                <Card.Body>
+                <Card.Body className="text-center">
                   <Card.Title>{product.name_product}</Card.Title>
                   <Card.Text>{product.description_product}</Card.Text>
-                  <Card.Text>Cost: ${product.cost}</Card.Text>
-                  <Card.Text>Stock: {product.stock}</Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <Button variant="primary" block>
+                  <Card.Text className="font-semibold">
+                    Cost: ${product.cost}
+                  </Card.Text>
+                  <Card.Text className="font-semibold">
+                    Stock: {product.stock}
+                  </Card.Text>
+                  <Button
+                    variant="primary"
+                    className="block w-full mt-4"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent modal from closing
+                      handleProductClick(product);
+                    }}
+                  >
                     Buy Now
                   </Button>
-                </Card.Footer>
+                </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
-        <div className="social-icons2 text-center mt-4">
-          <FaInstagram size={30} className="icon mx-2" />
-          <FaFacebook size={30} className="icon mx-2" />
-          <div className="line my-2"></div>
-          <h3>My Shopping</h3>
-        </div>
       </Container>
 
       <Modal show={showModal} onHide={handleClose}>
@@ -226,8 +227,8 @@ const Produk = () => {
               <div>
                 <h3>{selectedProduct.name_product}</h3>
                 <p>{selectedProduct.description_product}</p>
-                <p>Cost: ${selectedProduct.cost}</p>
-                <p>Stock: {selectedProduct.stock}</p>
+                <p className="font-semibold">Cost: ${selectedProduct.cost}</p>
+                <p className="font-semibold">Stock: {selectedProduct.stock}</p>
                 <Form>
                   <Form.Group controlId="formName">
                     <Form.Label>Name:</Form.Label>
@@ -237,12 +238,16 @@ const Produk = () => {
                     <Form.Label>Address:</Form.Label>
                     <Form.Control type="text" />
                   </Form.Group>
-                  <Form.Group controlId="formPaymentMethod" className="mt-3">
+                  <Form.Group
+                    controlId="formPaymentMethod"
+                    className="mt-3 font-semibold"
+                  >
                     <Form.Label>Payment Method:</Form.Label>
                     <Dropdown>
                       <Dropdown.Toggle
                         variant="outline-primary"
                         id="dropdown-basic"
+                        className="w-full"
                       >
                         {paymentMethod
                           ? paymentMethod
