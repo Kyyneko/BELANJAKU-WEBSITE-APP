@@ -21,7 +21,9 @@ const Order = () => {
         );
 
         console.log("Fetched Orders:", response.data);
-        setOrders([response.data]); // Pastikan respons berbentuk array
+        setOrders(
+          Array.isArray(response.data) ? response.data : [response.data]
+        ); // Pastikan respons berbentuk array
       } catch (error) {
         console.error("Error fetching orders:", error);
       }

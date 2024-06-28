@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom"; // Import Link
 import "../../css/user_experince/home.css";
 
@@ -30,10 +29,6 @@ const Home = () => {
                   Explore Now
                 </Button>
               </Link>
-              <div className="social-icons mt-4">
-                <FaInstagram size={30} className="icon mx-2" />
-                <FaFacebook size={30} className="icon mx-2" />
-              </div>
             </Col>
           </Row>
         </Container>

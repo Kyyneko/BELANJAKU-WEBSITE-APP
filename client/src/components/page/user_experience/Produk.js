@@ -11,8 +11,10 @@ import {
   Col,
   Card,
   Form,
+  Dropdown,
 } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom"; // Menggunakan useNavigate dari react-router-dom versi 6
 import "../../css/user_experince/Produk.css";
 
 const Produk = () => {
@@ -21,6 +23,8 @@ const Produk = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const navigate = useNavigate(); // Menggunakan useNavigate untuk navigasi
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,29 +66,108 @@ const Produk = () => {
       setSelectedProduct(product);
       setShowModal(true);
     } else {
-      setShowModal(true); // Menampilkan modal ketika tidak login
+      setShowModal(true);
     }
   };
 
   const handleClose = () => {
     setShowModal(false);
     setSelectedProduct(null);
+    setPaymentMethod("");
   };
 
-  const handleOrder = () => {
-    if (localStorage.getItem("isOfficer") === "true") {
+  const handleOrder = async () => {
+    if (!paymentMethod) {
       Swal.fire({
         icon: "error",
-        title: "Officer Tidak Dapat Melakukan Pemesanan",
-        text: "Anda tidak diizinkan untuk melakukan pemesanan produk.",
+        title: "Pilih Metode Pembayaran",
+        text: "Harap pilih metode pembayaran sebelum melanjutkan.",
       });
-    } else {
-      // Lakukan logika untuk melakukan pemesanan
-      // Contoh: Mengirimkan pesanan ke backend
-      console.log("Ordering product:", selectedProduct);
-      // Setelah berhasil melakukan pemesanan, Anda dapat menutup modal atau melakukan tindakan lainnya
-      setShowModal(false);
-      setSelectedProduct(null);
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/api/orders",
+        {
+          id_customer: localStorage.getItem("userId"),
+          id_product: selectedProduct.id_product,
+          total_orders: 1,
+          order_date: new Date().toISOString().slice(0, 10),
+          total_purchases: selectedProduct.cost,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        const orderId = response.data.id_order;
+        await axios.post(
+          "http://localhost:5000/api/purchases",
+          {
+            id_order: orderId,
+            id_customer: localStorage.getItem("userId"),
+            method: paymentMethod,
+            date: new Date().toISOString().slice(0, 10),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        await axios.patch(
+          `http://localhost:5000/api/products/${selectedProduct.id_product}/reduce-stock`,
+          {
+            total_orders: 1,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const updatedProductResponse = await axios.get(
+          `http://localhost:5000/api/products/${selectedProduct.id_product}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const updatedProduct = updatedProductResponse.data;
+
+        setProducts(
+          products.map((p) =>
+            p.id_product === updatedProduct.id_product ? updatedProduct : p
+          )
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Pesanan Berhasil",
+          text: "Pesanan Anda berhasil dilakukan.",
+        });
+
+        setShowModal(false);
+        setSelectedProduct(null);
+        setPaymentMethod("");
+
+        navigate("/order"); // Mengarahkan ke "/order" setelah pesanan berhasil
+      }
+    } catch (error) {
+      console.error("Error ordering product:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Melakukan Pesanan",
+        text: "Terjadi kesalahan saat melakukan pesanan.",
+      });
     }
   };
 
@@ -106,7 +189,7 @@ const Produk = () => {
                 onClick={() => handleProductClick(product)}
                 className="h-100 shadow"
               >
-                <Card.Img variant="top" src={Picture} alt="Gambar produk" />
+                <Card.Img variant="top" src={Picture} alt="Product image" />
 
                 <Card.Body>
                   <Card.Title>{product.name_product}</Card.Title>
@@ -116,7 +199,7 @@ const Produk = () => {
                 </Card.Body>
                 <Card.Footer>
                   <Button variant="primary" block>
-                    Order Now
+                    Buy Now
                   </Button>
                 </Card.Footer>
               </Card>
@@ -127,7 +210,7 @@ const Produk = () => {
           <FaInstagram size={30} className="icon mx-2" />
           <FaFacebook size={30} className="icon mx-2" />
           <div className="line my-2"></div>
-          <h3>Belanjaku</h3>
+          <h3>My Shopping</h3>
         </div>
       </Container>
 
@@ -154,9 +237,33 @@ const Produk = () => {
                     <Form.Label>Address:</Form.Label>
                     <Form.Control type="text" />
                   </Form.Group>
-                  <Form.Group controlId="formQuantity" className="mt-3">
-                    <Form.Label>Quantity:</Form.Label>
-                    <Form.Control type="number" />
+                  <Form.Group controlId="formPaymentMethod" className="mt-3">
+                    <Form.Label>Payment Method:</Form.Label>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        variant="outline-primary"
+                        id="dropdown-basic"
+                      >
+                        {paymentMethod
+                          ? paymentMethod
+                          : "Select Payment Method"}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => setPaymentMethod("Gopay")}
+                        >
+                          Gopay
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => setPaymentMethod("Dana")}>
+                          Dana
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => setPaymentMethod("Bank Transfer")}
+                        >
+                          Bank Transfer
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Form.Group>
                 </Form>
               </div>

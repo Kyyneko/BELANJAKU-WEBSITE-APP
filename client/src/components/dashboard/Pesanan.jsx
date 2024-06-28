@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 const Pesanan = () => {
@@ -24,112 +23,51 @@ const Pesanan = () => {
     }
   };
 
-  const handleProcessOrder = async (orderId) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.put(
-        `http://localhost:5000/api/orders/${orderId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        // Berhasil diproses
-        Swal.fire({
-          icon: "success",
-          title: "Pesanan Diproses",
-          text: "Pesanan berhasil diproses.",
-        });
-        // Refresh data pesanan setelah proses berhasil
-        fetchOrders();
-      }
-    } catch (error) {
-      console.error("Error processing order:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal Memproses Pesanan",
-        text: "Terjadi kesalahan saat memproses pesanan.",
-      });
-    }
-  };
-
-  const handleCancelProcess = async (orderId) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.delete(
-        `http://localhost:5000/api/orders/${orderId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        // Berhasil dibatalkan
-        Swal.fire({
-          icon: "success",
-          title: "Pesanan Dibatalkan",
-          text: "Pesanan berhasil dibatalkan.",
-        });
-        // Refresh data pesanan setelah pembatalan berhasil
-        fetchOrders();
-      }
-    } catch (error) {
-      console.error("Error cancelling order:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal Membatalkan Pesanan",
-        text: "Terjadi kesalahan saat membatalkan pesanan.",
-      });
-    }
-  };
-
   return (
-    <div className="container mt-4">
-      <h2>Pesanan</h2>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>ID Pelanggan</th>
-            <th>Nama Produk</th>
-            <th>Tanggal Pemesanan</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order.id_order}>
-              <td>{order.id_customer}</td>
-              <td>{order.product_name}</td>
-              <td>{order.order_date}</td>
-              <td>{order.status ? "Sudah Diproses" : "Menunggu Proses"}</td>
-              <td>
-                {!order.status && (
-                  <>
-                    <Button
-                      variant="success"
-                      className="me-2"
-                      onClick={() => handleProcessOrder(order.id_order)}
-                    >
-                      Proses
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleCancelProcess(order.id_order)}
-                    >
-                      Batal
-                    </Button>
-                  </>
-                )}
-              </td>
+    <div className="container mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-4">Pesanan</h2>
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID Pelanggan
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID Produk
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Tanggal Pemesanan
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Pesanan
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Pembelian
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {orders.map((order) => (
+              <tr key={order.id_order}>
+                <td className="px-6 py-4 whitespace-nowrap">{order.id_customer}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.id_product}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.order_date}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.total_orders}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.total_purchases}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    Pesanan Dikirim
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

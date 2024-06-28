@@ -1,22 +1,22 @@
-import React from 'react'
-import About  from './About' 
-import Category from './Category'
-import Customers from './Customers'
+import React from "react";
+import About from "./About";
+import Category from "./Category";
+import Customers from "./Customers";
 
 const About2 = () => {
   return (
     <div>
-      <div className='section'>
-      <About/>
+      <div className="section">
+        <About />
       </div>
-      <div className='section'>
-      <Category/>
+      <div className="section">
+        <Category />
       </div>
-      <div className='section'>
-      <Customers/>
+      <div className="section">
+        <Customers />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default About2
+export default About2;

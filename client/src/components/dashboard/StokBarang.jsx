@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Table, Button, Modal, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 const StockBarang = () => {
@@ -171,109 +169,168 @@ const StockBarang = () => {
   };
 
   return (
-    <section className="stock-barang container mt-5">
-      <h2 className="mb-4">STOCK BARANG</h2>
-      <Button className="mb-4" onClick={handleAddButtonClick}>Tambah Barang</Button>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id_product</th>
-            <th>name_product</th>
-            <th>description_product</th>
-            <th>cost</th>
-            <th>stock</th>
-            <th>id_category</th>
-            <th>aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {produk.map((item) => (
-            <tr key={item.id_product}>
-              <td>{item.id_product}</td>
-              <td>{item.name_product}</td>
-              <td>{item.description_product}</td>
-              <td>{item.cost}</td>
-              <td>{item.stock}</td>
-              <td>{item.id_category}</td>
-              <td>
-                <Button variant="warning" className="me-2" onClick={() => handleEditClick(item)}>✏</Button>
-                <Button variant="danger" onClick={() => handleDeleteClick(item.id_product)}>❌</Button>
-              </td>
+    <div className="container mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-4">STOCK BARANG</h2>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+        onClick={handleAddButtonClick}
+      >
+        Tambah Barang
+      </button>
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID Produk
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Nama Produk
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Deskripsi Produk
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Harga
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Stok
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID Kategori
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Aksi
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {produk.map((item) => (
+              <tr key={item.id_product}>
+                <td className="px-6 py-4 whitespace-nowrap">{item.id_product}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.name_product}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.description_product}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.cost}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.stock}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.id_category}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
+                    onClick={() => handleEditClick(item)}
+                  >
+                    ✏
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleDeleteClick(item.id_product)}
+                  >
+                    ❌
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Modal */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{selectedProduct ? 'Edit Produk' : 'Tambah Produk'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formName">
-              <Form.Label>Nama Produk</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Masukkan nama produk"
-                name="name_product"
-                value={formData.name_product}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formDescription">
-              <Form.Label>Deskripsi Produk</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Masukkan deskripsi produk"
-                name="description_product"
-                value={formData.description_product}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formCost">
-              <Form.Label>Harga</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Masukkan harga"
-                name="cost"
-                value={formData.cost}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formStock">
-              <Form.Label>Stok</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Masukkan stok"
-                name="stock"
-                value={formData.stock}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formCategory">
-              <Form.Label>ID Kategori</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Masukkan ID kategori"
-                name="id_category"
-                value={formData.id_category}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Batal
-          </Button>
-          <Button variant="primary" onClick={handleModalEdit}>
-            {selectedProduct ? 'Simpan Perubahan' : 'Tambah Produk'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </section>
+      {showModal && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+            <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      {selectedProduct ? 'Edit Produk' : 'Tambah Produk'}
+                    </h3>
+                    <div className="mt-2">
+                      <form>
+                        <div className="mb-4">
+                          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="formName">
+                            Nama Produk
+                          </label>
+                          <input
+                            type="text"
+                            name="name_product"
+                            value={formData.name_product}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="formDescription">
+                            Deskripsi Produk
+                          </label>
+                          <textarea
+                            rows={3}
+                            name="description_product"
+                            value={formData.description_product}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          ></textarea>
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="formCost">
+                            Harga
+                          </label>
+                          <input
+                            type="number"
+                            name="cost"
+                            value={formData.cost}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="formStock">
+                            Stok
+                          </label>
+                          <input
+                            type="number"
+                            name="stock"
+                            value={formData.stock}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="formCategory">
+                            ID Kategori
+                          </label>
+                          <input
+                            type="text"
+                            name="id_category"
+                            value={formData.id_category}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={handleModalEdit}
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  {selectedProduct ? 'Simpan Perubahan' : 'Tambah Produk'}
+                </button>
+                <button
+                  onClick={handleCloseModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Batal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
