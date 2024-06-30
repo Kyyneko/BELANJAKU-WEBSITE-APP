@@ -48,7 +48,7 @@ const Transaksi = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Daftar Pembelian</h2>
+      <h2 className="text-2xl font-bold mb-4">Purchases</h2>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">

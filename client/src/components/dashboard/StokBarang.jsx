@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const StockBarang = () => {
   const [produk, setProduk] = useState([]);
@@ -13,9 +14,12 @@ const StockBarang = () => {
     stock: 0,
     id_category: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     fetchProduk();
+    fetchCategories();
   }, []);
 
   const fetchProduk = async () => {
@@ -27,12 +31,30 @@ const StockBarang = () => {
         },
       });
       setProduk(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching produk:", error);
+      setLoading(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:5000/api/categories", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
     }
   };
 
   const handleAddButtonClick = () => {
+    setShowModal(true);
+    setSelectedProduct(null); // Clear selected product
     setFormData({
       name_product: "",
       description_product: "",
@@ -40,11 +62,11 @@ const StockBarang = () => {
       stock: 0,
       id_category: "",
     });
-    setShowModal(true);
   };
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
+    setShowModal(true);
     setFormData({
       name_product: product.name_product,
       description_product: product.description_product,
@@ -52,7 +74,6 @@ const StockBarang = () => {
       stock: product.stock,
       id_category: product.id_category,
     });
-    setShowModal(true);
   };
 
   const handleDeleteClick = async (id) => {
@@ -118,6 +139,21 @@ const StockBarang = () => {
   };
 
   const handleModalEdit = async () => {
+    if (
+      !formData.name_product ||
+      !formData.description_product ||
+      formData.cost <= 0 ||
+      formData.stock < 0 ||
+      !formData.id_category
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Pastikan semua field terisi dengan benar.",
+      });
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
       const apiEndpoint = selectedProduct
@@ -179,180 +215,160 @@ const StockBarang = () => {
         Tambah Barang
       </button>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID Produk
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nama Produk
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Deskripsi Produk
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Harga
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stok
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Kategori
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Aksi
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {produk.map((product) => (
-              <tr key={product.id_product}>
-                <td className="px-6 py-4 whitespace-nowrap">{product.id_product}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.name_product}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.description_product}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.cost}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.stock}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.id_category}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
-                    onClick={() => handleEditClick(product)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleDeleteClick(product.id_product)}
-                  >
-                    Hapus
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Modal */}
-      {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      {selectedProduct ? "Edit Produk" : "Tambah Produk"}
-                    </h3>
-                    <div className="mt-2">
-                      <div className="mb-4">
-                        <label
-                          htmlFor="name_product"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Nama Produk
-                        </label>
-                        <input
-                          type="text"
-                          name="name_product"
-                          id="name_product"
-                          value={formData.name_product}
-                          onChange={handleInputChange}
-                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="description_product"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Deskripsi Produk
-                        </label>
-                        <textarea
-                          name="description_product"
-                          id="description_product"
-                          value={formData.description_product}
-                          onChange={handleInputChange}
-                          rows="3"
-                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        ></textarea>
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="cost"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Harga
-                        </label>
-                        <input
-                          type="number"
-                          name="cost"
-                          id="cost"
-                          value={formData.cost}
-                          onChange={handleInputChange}
-                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="stock"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Stok
-                        </label>
-                        <input
-                          type="number"
-                          name="stock"
-                          id="stock"
-                          value={formData.stock}
-                          onChange={handleInputChange}
-                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="id_category"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Kategori
-                        </label>
-                        <input
-                          type="text"
-                          name="id_category"
-                          id="id_category"
-                          value={formData.id_category}
-                          onChange={handleInputChange}
-                          className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  type="button"
-                  onClick={handleModalEdit}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Simpan
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Batal
-                </button>
-              </div>
-            </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-4">
+            <svg
+              className="animate-spin h-5 w-5 mr-3 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.001 8.001 0 0120.708 7.5H16m-5.373 14.373A8.001 8.001 0 014.5 11V6.292"
+              ></path>
+            </svg>
+            <span className="text-gray-500">Loading...</span>
           </div>
-        </div>
-      )}
+        ) : (
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID Produk
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Nama Produk
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Deskripsi Produk
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Harga
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Stok
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Kategori
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Aksi
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {produk.map((product) => (
+                <tr key={product.id_product}>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.id_product}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.name_product}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.description_product}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.cost}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.stock}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.id_category}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
+                      onClick={() => handleEditClick(product)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="bg-red-500 text-white px-4 py-2 rounded"
+                      onClick={() => handleDeleteClick(product.id_product)}
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {/* Bootstrap Modal */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedProduct ? "Edit Produk" : "Tambah Produk"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="formName">
+            <Form.Label>Nama Produk</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Masukkan nama produk"
+              name="name_product"
+              value={formData.name_product}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formDescription">
+            <Form.Label>Deskripsi Produk</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Masukkan deskripsi produk"
+              name="description_product"
+              value={formData.description_product}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formCost">
+            <Form.Label>Harga</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Masukkan harga produk"
+              name="cost"
+              value={formData.cost}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formStock">
+            <Form.Label>Stok</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Masukkan stok produk"
+              name="stock"
+              value={formData.stock}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formCategory">
+            <Form.Label>Kategori</Form.Label>
+            <Form.Control
+              as="select"
+              name="id_category"
+              value={formData.id_category}
+              onChange={handleInputChange}
+            >
+              <option value="">Pilih Kategori</option>
+              {categories.map((category) => (
+                <option key={category.id_category} value={category.id_category}>
+                  {category.name}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Batal
+          </Button>
+          <Button variant="primary" onClick={handleModalEdit}>
+            Simpan
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

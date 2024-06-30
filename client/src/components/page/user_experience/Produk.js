@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
-import Picture from "../../images/user_experience/ecommerce.jpg";
 import {
   Modal,
   Button,
@@ -11,10 +9,12 @@ import {
   Card,
   Form,
   Dropdown,
+  Spinner,
 } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import "../../css/user_experince/Produk.css";
+import Picture from "../../images/user_experience/ecommerce.jpg";
 
 const Produk = () => {
   const [products, setProducts] = useState([]);
@@ -23,30 +23,33 @@ const Produk = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(true); // New state for loading
+  const [isOfficer, setIsOfficer] = useState(false); // State for isOfficer
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem("token");
+        let response;
         if (token) {
-          const response = await axios.get(
-            "http://localhost:5000/api/products",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setProducts(response.data);
+          response = await axios.get("http://localhost:5000/api/products", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         } else {
-          const response = await axios.get(
+          response = await axios.get(
             "http://localhost:5000/api/guest/products"
           );
-          setProducts(response.data);
         }
+        setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false); // Set loading to false after products are fetched
       }
     };
 
@@ -54,6 +57,15 @@ const Produk = () => {
 
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
+
+    // Check if user is an officer
+    const officerStatus = localStorage.getItem("isOfficer") === "true";
+    setIsOfficer(officerStatus);
+
+    // Prevent officers from accessing order modal
+    if (officerStatus) {
+      setShowModal(false);
+    }
   }, []);
 
   const filteredProducts = products.filter((product) =>
@@ -61,7 +73,7 @@ const Produk = () => {
   );
 
   const handleProductClick = (product) => {
-    if (isLoggedIn) {
+    if (isLoggedIn && !isOfficer) {
       setSelectedProduct(product);
       setShowModal(true);
     } else {
@@ -73,14 +85,26 @@ const Produk = () => {
     setShowModal(false);
     setSelectedProduct(null);
     setPaymentMethod("");
+    setName("");
+    setAddress("");
   };
 
   const handleOrder = async () => {
+    // Check if user is not an officer to proceed with the order
+    if (isOfficer) {
+      Swal.fire({
+        icon: "error",
+        title: "Permission Denied",
+        text: "You can't place an order as an officer.",
+      });
+      return;
+    }
+
     if (!paymentMethod) {
       Swal.fire({
         icon: "error",
-        title: "Pilih Metode Pembayaran",
-        text: "Harap pilih metode pembayaran sebelum melanjutkan.",
+        title: "Select Payment Method",
+        text: "Please select a payment method before proceeding.",
       });
       return;
     }
@@ -95,6 +119,8 @@ const Produk = () => {
           total_orders: 1,
           order_date: new Date().toISOString().slice(0, 10),
           total_purchases: selectedProduct.cost,
+          name: name,
+          address: address,
         },
         {
           headers: {
@@ -150,13 +176,15 @@ const Produk = () => {
 
         Swal.fire({
           icon: "success",
-          title: "Pesanan Berhasil",
-          text: "Pesanan Anda berhasil dilakukan.",
+          title: "Order Successful",
+          text: "Your order has been placed successfully.",
         });
 
         setShowModal(false);
         setSelectedProduct(null);
         setPaymentMethod("");
+        setName("");
+        setAddress("");
 
         navigate("/order");
       }
@@ -164,8 +192,8 @@ const Produk = () => {
       console.error("Error ordering product:", error);
       Swal.fire({
         icon: "error",
-        title: "Gagal Melakukan Pesanan",
-        text: "Terjadi kesalahan saat melakukan pesanan.",
+        title: "Failed to Place Order",
+        text: "An error occurred while placing the order.",
       });
     }
   };
@@ -181,38 +209,46 @@ const Produk = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {filteredProducts.map((product) => (
-            <Col key={product.id_product}>
-              <Card
-                onClick={() => handleProductClick(product)}
-                className="h-100 shadow-lg rounded-lg overflow-hidden"
-              >
-                <Card.Img variant="top" src={Picture} alt="Product image" />
-                <Card.Body className="text-center">
-                  <Card.Title>{product.name_product}</Card.Title>
-                  <Card.Text>{product.description_product}</Card.Text>
-                  <Card.Text className="font-semibold">
-                    Cost: ${product.cost}
-                  </Card.Text>
-                  <Card.Text className="font-semibold">
-                    Stock: {product.stock}
-                  </Card.Text>
-                  <Button
-                    variant="primary"
-                    className="block w-full mt-4"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent modal from closing
-                      handleProductClick(product);
-                    }}
-                  >
-                    Buy Now
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {loading ? (
+          <div className="text-center">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {filteredProducts.map((product) => (
+              <Col key={product.id_product}>
+                <Card
+                  onClick={() => handleProductClick(product)}
+                  className="h-100 shadow-lg rounded-lg overflow-hidden"
+                >
+                  <Card.Img variant="top" src={Picture} alt="Product image" />
+                  <Card.Body className="text-center">
+                    <Card.Title>{product.name_product}</Card.Title>
+                    <Card.Text>{product.description_product}</Card.Text>
+                    <Card.Text className="font-semibold">
+                      Cost: ${product.cost}
+                    </Card.Text>
+                    <Card.Text className="font-semibold">
+                      Stock: {product.stock}
+                    </Card.Text>
+                    <Button
+                      variant="primary"
+                      className="block w-full mt-4"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent modal from closing
+                        handleProductClick(product);
+                      }}
+                    >
+                      Buy Now
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
 
       <Modal show={showModal} onHide={handleClose}>
@@ -221,7 +257,7 @@ const Produk = () => {
             {isLoggedIn ? "Order Product" : "You're Not Logged In"}
           </Modal.Title>
         </Modal.Header>
-        {isLoggedIn && (
+        {isLoggedIn && !isOfficer && (
           <Modal.Body>
             {selectedProduct && (
               <div>
@@ -232,11 +268,19 @@ const Produk = () => {
                 <Form>
                   <Form.Group controlId="formName">
                     <Form.Label>Name:</Form.Label>
-                    <Form.Control type="text" />
+                    <Form.Control
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                   </Form.Group>
                   <Form.Group controlId="formAddress" className="mt-3">
                     <Form.Label>Address:</Form.Label>
-                    <Form.Control type="text" />
+                    <Form.Control
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
                   </Form.Group>
                   <Form.Group
                     controlId="formPaymentMethod"
@@ -279,7 +323,7 @@ const Produk = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          {isLoggedIn && (
+          {isLoggedIn && !isOfficer && (
             <Button variant="primary" onClick={handleOrder}>
               Order
             </Button>

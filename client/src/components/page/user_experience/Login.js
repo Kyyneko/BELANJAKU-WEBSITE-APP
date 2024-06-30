@@ -33,10 +33,16 @@ const Login = () => {
       });
 
       if (user_type === "isOfficer") {
-        localStorage.setItem("isOfficer", true);
+        localStorage.setItem("isOfficer", "true");
+        localStorage.setItem("isBoss", "false");
+        navigate("/dashboard");
+      } else if (user_type === "isBoss") {
+        localStorage.setItem("isBoss", "true");
+        localStorage.setItem("isOfficer", "false");
         navigate("/dashboard");
       } else {
-        localStorage.setItem("isOfficer", false);
+        localStorage.setItem("isOfficer", "false");
+        localStorage.setItem("isBoss", "false");
         navigate("/");
       }
     } catch (error) {
