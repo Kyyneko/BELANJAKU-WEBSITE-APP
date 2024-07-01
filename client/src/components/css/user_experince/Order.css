@@ -1,6 +1,6 @@
 .order-container {
   padding: 20px;
-  min-height: 100vh; /* Tambahkan ini untuk memastikan container memenuhi tinggi viewport */
+  min-height: 100vh;
 }
 
 .order-list .card {

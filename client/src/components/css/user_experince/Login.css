@@ -14,13 +14,13 @@
 }
 
 .login-form h2 {
-  text-align: center; /* Center the header text */
-  color: #fff; /* Text color */
+  text-align: center; 
+  color: #fff;
 }
 
 .login-form label {
   margin-bottom: 10px;
-  color: #fff; /* Text color */
+  color: #fff;
 }
 
 .login-form input {
@@ -37,18 +37,18 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff; /* Button color */
-  color: #fff; /* Text color */
+  background-color: #007bff; 
+  color: #fff; 
 }
 
 .btn:hover {
-  background-color: #0056b3; /* Button hover color */
+  background-color: #0056b3; 
 }
 
 .toggle-form {
   text-align: right;
   margin-top: 10px;
-  color: #fff; /* Text color */
+  color: #fff; 
 }
 
 .toggle-form a {

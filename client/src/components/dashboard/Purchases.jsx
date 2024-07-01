@@ -4,15 +4,15 @@ import axios from "axios";
 const Transaksi = () => {
   const [purchases, setPurchases] = useState([]);
   const [token, setToken] = useState("");
-  const [filter, setFilter] = useState("all"); // State untuk filter tanggal
-  const [searchQuery, setSearchQuery] = useState(""); // State untuk nilai pencarian
+  const [filter, setFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    setToken(storedToken); // Set token from localStorage
+    setToken(storedToken); 
 
     if (storedToken) {
-      fetchPurchases(storedToken); // Call fetchPurchases with token
+      fetchPurchases(storedToken);
     }
   }, []);
 

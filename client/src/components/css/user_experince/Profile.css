@@ -34,7 +34,7 @@
   background: url('../../images/user_experience/admin.jpg') no-repeat center center;
   background-size: contain;
   margin-bottom: 10px;
-  border-radius: 50%; /* Ubah border-radius menjadi 50% untuk bentuk lingkaran */
+  border-radius: 50%;
 }
 
 .select-photo-button {

@@ -37,17 +37,17 @@ class Customer(db.Model):
     hp = db.Column(db.String(20))
 
 class CustomerOrder(db.Model):
-    __tablename__ = 'customerorder'  # Menyesuaikan dengan nama tabel di database
+    __tablename__ = 'customerorder'
     
     id_order = db.Column(db.Integer, primary_key=True)
-    id_customer = db.Column(db.Integer, db.ForeignKey('customer.id_customer'))  # Menggunakan customer_id
+    id_customer = db.Column(db.Integer, db.ForeignKey('customer.id_customer'))
     id_product = db.Column(db.Integer, db.ForeignKey('product.id_product'))
     total_orders = db.Column(db.Integer, nullable=False)
     order_date = db.Column(db.Date)
     total_purchases = db.Column(db.Integer)
-    status = db.Column(db.Boolean, default=False)  # Kolom status ditambahkan
-    name = db.Column(db.String(50))  # Tambah kolom name
-    address = db.Column(db.String(255))  # Tambah kolom address
+    status = db.Column(db.Boolean, default=False)
+    name = db.Column(db.String(50))
+    address = db.Column(db.String(255)) 
 
     def as_dict(self):
         return {
@@ -57,7 +57,7 @@ class CustomerOrder(db.Model):
             'total_orders': self.total_orders,
             'order_date': self.order_date.isoformat() if isinstance(self.order_date, datetime.date) else self.order_date,
             'total_purchases': float(self.total_purchases) if isinstance(self.total_purchases, Decimal) else self.total_purchases,
-            'status': "Completed" if self.status else "In Shipping",  # Ubah status menjadi string
+            'status': "Completed" if self.status else "In Shipping",  
             'name': self.name,
             'address': self.address
         }
@@ -307,9 +307,9 @@ def add_order():
         total_orders=data['total_orders'],
         order_date=data['order_date'],
         total_purchases=data['total_purchases'],
-        status=data.get('status', False),  # Mengatur status default ke False
-        name=data.get('name'),  # Menambahkan name
-        address=data.get('address')  # Menambahkan address
+        status=data.get('status', False),
+        name=data.get('name'), 
+        address=data.get('address') 
     )
     db.session.add(new_order)
     db.session.commit()
@@ -320,7 +320,7 @@ def add_order():
 def get_orders_by_user_id(user_id):
     orders = CustomerOrder.query.filter_by(id_customer=user_id).all()
     if not orders:
-        return jsonify([]), 200  # Mengembalikan array kosong dengan status 200
+        return jsonify([]), 200  
     return jsonify([order.as_dict() for order in orders])
 
 
@@ -337,7 +337,7 @@ def delete_order(id_order):
 @jwt_required()
 def update_order_status(id_order):
     order = CustomerOrder.query.get_or_404(id_order)
-    order.status = True  # Sesuaikan dengan nilai boolean yang sesuai dengan 'Complete' jika itu adalah boolean
+    order.status = True
     db.session.commit()
     return jsonify(order.as_dict()), 200
 
@@ -355,8 +355,7 @@ def update_customer(id_customer):
 
     customer.username = data.get('username', customer.username)
     if 'password' in data:
-        customer.password = generate_password_hash(data['password'])
-    customer.address = data.get('address', customer.address)
+        customer.address = data.get('address', customer.address)
     customer.email = data.get('email', customer.email)
     customer.hp = data.get('hp', customer.hp)
 

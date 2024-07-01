@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
-import Swal from "sweetalert2"; // Import SweetAlert2
-import "sweetalert2/dist/sweetalert2.css"; // Style SweetAlert2
+import Swal from "sweetalert2"; 
+import "sweetalert2/dist/sweetalert2.css";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);

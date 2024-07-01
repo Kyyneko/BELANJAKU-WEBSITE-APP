@@ -1,11 +1,10 @@
-/* Sidebar.css */
 .sidebar {
-  width: 220px; /* Increased width for better readability */
+  width: 220px;
   height: 100vh;
   position: fixed;
   background-color: #f7f7f7;
   padding-top: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle box-shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
 .sidebar ul {
@@ -21,11 +20,11 @@
   text-decoration: none;
   color: #333;
   display: block;
-  padding: 12px 20px; /* Increased padding for better touch/click area */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  padding: 12px 20px; 
+  transition: background-color 0.3s ease; 
 }
 
 .sidebar ul li a:hover {
-  background-color: #e2e8f0; /* Lighter background on hover */
-  color: #333; /* Keep text color consistent on hover */
+  background-color: #e2e8f0;
+  color: #333; 
 }

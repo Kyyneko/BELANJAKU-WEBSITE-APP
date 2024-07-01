@@ -3,8 +3,8 @@ import axios from "axios";
 
 const Pelanggan = () => {
   const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true); // State untuk menunjukkan status loading
-  const [searchTerm, setSearchTerm] = useState(""); // State untuk nilai pencarian
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchCustomers();
@@ -19,10 +19,10 @@ const Pelanggan = () => {
         },
       });
       setCustomers(response.data);
-      setLoading(false); // Setelah data terambil, loading di-set menjadi false
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching customers:", error);
-      setLoading(false); // Jika terjadi error, tetap set loading menjadi false
+      setLoading(false);
     }
   };
 
@@ -48,7 +48,7 @@ const Pelanggan = () => {
         />
       </div>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        {loading ? ( // Tampilkan spinner jika sedang loading
+        {loading ? (
           <div className="flex items-center justify-center py-4">
             <svg
               className="animate-spin h-5 w-5 mr-3 text-gray-500"

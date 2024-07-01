@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
@@ -12,7 +11,6 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
     address: "",
     email: "",
     hp: "",
@@ -143,16 +141,6 @@ const Profile = () => {
                 placeholder="Enter username"
                 name="username"
                 value={formData.username}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter new password"
-                name="password"
-                value={formData.password}
                 onChange={handleInputChange}
               />
             </Form.Group>

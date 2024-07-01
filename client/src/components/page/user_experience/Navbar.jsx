@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Navbar as BootstrapNavbar, Nav, Container, Button } from "react-bootstrap";
-import profil from "../../images/user_experience/profile.png";
 import "../../css/user_experince/Navbar.css";
 
 const Navbar = () => {
@@ -15,6 +14,22 @@ const Navbar = () => {
   const closeMenu = () => setClick(false);
 
   const isActive = (path) => (location.pathname === path ? "active" : "");
+
+  const confirmLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!'
+    });
+
+    if (result.isConfirmed) {
+      handleLogout();
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -45,10 +60,11 @@ const Navbar = () => {
   };
 
   const token = localStorage.getItem("token");
-  const isOfficer = localStorage.getItem("isOfficer") === "true"; // Convert ke boolean
+  const isOfficer = localStorage.getItem("isOfficer") === "true"; 
+  const isBoss = localStorage.getItem("isBoss") === "true"; 
 
   const handleProfileClick = () => {
-    if (token && isOfficer) {
+    if (token && (isOfficer || isBoss)) {
       navigate("/dashboard/stok-barang");
     } else if (token) {
       navigate("/profile");
@@ -76,23 +92,31 @@ const Navbar = () => {
             <Nav.Link as={Link} to="/produk" onClick={closeMenu} className={isActive("/produk")}>
               Produk
             </Nav.Link>
-            {!isOfficer && (
+            {!isOfficer && !isBoss && (
               <Nav.Link as={Link} to="/order" onClick={closeMenu} className={isActive("/order")}>
                 Order
               </Nav.Link>
             )}
           </Nav>
           <Nav>
-            <Nav.Item>
-              <div className="nav-link user-icon" onClick={handleProfileClick}>
-                <img src={profil} alt="user" className="user-icon-img" />
-              </div>
-            </Nav.Item>
-            {token && (
+            {token ? (
+              <>
+                <Nav.Item>
+                  <Nav.Link as={Link} to={isOfficer || isBoss ? "/dashboard/list-purchases" : "/profile"} className={isActive(isOfficer || isBoss ? "/dashboard/stok-barang" : "/profile")}>
+                    {isOfficer || isBoss ? "Dashboard" : "Profile"}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Button variant="outline-light" className="logout-btn" onClick={confirmLogout}>
+                    Logout
+                  </Button>
+                </Nav.Item>
+              </>
+            ) : (
               <Nav.Item>
-                <Button variant="outline-light" className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </Button>
+                <Nav.Link as={Link} to="/login" className={isActive("/login")}>
+                  Login
+                </Nav.Link>
               </Nav.Item>
             )}
           </Nav>

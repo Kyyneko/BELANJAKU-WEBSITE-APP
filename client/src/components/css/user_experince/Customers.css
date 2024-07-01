@@ -28,7 +28,7 @@
   .crop-container {
     overflow: hidden;
     width: 100%;
-    height: 200px; /* Sesuaikan tinggi sesuai kebutuhan */
+    height: 200px; 
   }
   
   .crop-container img {

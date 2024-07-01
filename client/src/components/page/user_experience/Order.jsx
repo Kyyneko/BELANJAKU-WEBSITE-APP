@@ -10,6 +10,7 @@ import {
   Button,
   Spinner,
 } from "react-bootstrap";
+import Swal from "sweetalert2";
 import "../../css/user_experince/Order.css";
 
 const Order = () => {
@@ -64,25 +65,45 @@ const Order = () => {
   }, []);
 
   const handleCompleteOrder = async (orderId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.patch(
-        `http://localhost:5000/api/orders/${orderId}`,
-        { status: true },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Confirm that you have received the order!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, I received it!'
+    });
 
-      // Update status directly in local state
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order.id_order === orderId ? { ...order, status: true } : order
-        )
-      );
-    } catch (error) {
-      console.error("Error updating order status:", error);
-      setError("Failed to update order status. Please try again later.");
+    if (result.isConfirmed) {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.patch(
+          `http://localhost:5000/api/orders/${orderId}`,
+          { status: true },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        // Update status directly in local state
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order.id_order === orderId ? { ...order, status: true } : order
+          )
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Order Completed",
+          text: "You have successfully confirmed the order!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch (error) {
+        console.error("Error updating order status:", error);
+        setError("Failed to update order status. Please try again later.");
+      }
     }
   };
 
@@ -122,7 +143,7 @@ const Order = () => {
 
   return (
     <Container className="order-container" id="order">
-      <h1 className="title text-center mt-4">YOUR ORDERS</h1>
+      <h2 className="title text-center mt-1 mb-2">Your Orders</h2>
       {orders.length > 0 ? (
         <Row className="order-list">
           {orders.map((order) => (
@@ -155,7 +176,7 @@ const Order = () => {
                         variant="success"
                         onClick={() => handleCompleteOrder(order.id_order)}
                       >
-                        Pesanan Diterima
+                        Received Order
                       </Button>
                     </ListGroup.Item>
                   )}

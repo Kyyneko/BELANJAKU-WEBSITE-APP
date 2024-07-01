@@ -3,7 +3,6 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import us1 from "../../images/user_experience/us1.jpg";
 import us2 from "../../images/user_experience/us2.jpg";
 import us3 from "../../images/user_experience/us3.jpg";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
 import "../../css/user_experince/Customers.css";
 
 const Customers = () => {

@@ -11,7 +11,7 @@
   .register-form {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center all items horizontally */
+    align-items: center;
   }
   
   .register-form h2 {
@@ -23,7 +23,7 @@
     margin-bottom: 10px;
     width: 100%;
     display: flex;
-    flex-direction: column; /* Ensure label and input are stacked */
+    flex-direction: column;
   }
   
   .register-form input {
@@ -32,8 +32,8 @@
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%; /* Make inputs take the full width */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    width: 100%;
+    box-sizing: border-box; 
   }
   
   .btn {
@@ -43,7 +43,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; /* Ensure the button is as wide as the inputs */
+    width: 100%;
     box-sizing: border-box;
   }
   

@@ -4,8 +4,8 @@ import axios from "axios";
 const Pesanan = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all"); // State untuk filter tanggal
-  const [searchTerm, setSearchTerm] = useState(""); // State untuk nilai pencarian
+  const [filter, setFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchOrders();

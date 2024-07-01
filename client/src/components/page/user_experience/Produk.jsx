@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Footer from "./Footer.jsx"; // Sesuaikan path sesuai dengan struktur proyek Anda
+import Footer from "./Footer.jsx"; 
 import {
   Modal,
   Button,
@@ -28,6 +28,7 @@ const Produk = () => {
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(true);
   const [isOfficer, setIsOfficer] = useState(false);
+  const [isBoss, setIsBoss] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +63,11 @@ const Produk = () => {
     const officerStatus = localStorage.getItem("isOfficer") === "true";
     setIsOfficer(officerStatus);
 
-    if (officerStatus) {
+    const bossStatus = localStorage.getItem("isBoss") === "true";
+    setIsBoss(bossStatus);
+
+
+    if (officerStatus || bossStatus) {
       setShowModal(false);
     }
   }, []);
@@ -72,7 +77,7 @@ const Produk = () => {
   );
 
   const handleProductClick = (product) => {
-    if (isLoggedIn && !isOfficer) {
+    if (isLoggedIn && !(isOfficer || isBoss)) {
       setSelectedProduct(product);
       setShowModal(true);
     } else {
@@ -89,11 +94,11 @@ const Produk = () => {
   };
 
   const handleOrder = async () => {
-    if (isOfficer) {
+    if (isOfficer || isBoss) {
       Swal.fire({
         icon: "error",
         title: "Permission Denied",
-        text: "You can't place an order as an officer.",
+        text: "You can't place an order as an officer or boss.",
       });
       return;
     }
@@ -258,7 +263,7 @@ const Produk = () => {
             {isLoggedIn ? "Order Product" : "You're Not Logged In"}
           </Modal.Title>
         </Modal.Header>
-        {isLoggedIn && !isOfficer && (
+        {isLoggedIn && !(isOfficer || isBoss) && (
           <Modal.Body>
             {selectedProduct && (
               <div>
@@ -324,7 +329,7 @@ const Produk = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          {isLoggedIn && !isOfficer && (
+          {isLoggedIn && !(isOfficer || isBoss) && (
             <Button variant="primary" onClick={handleOrder}>
               Order
             </Button>

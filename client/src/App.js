@@ -16,7 +16,7 @@ import Login from "./components/page/user_experience/Login";
 import Register from "./components/page/user_experience/Register";
 import Profile from "./components/page/user_experience/Profile";
 import Dashboard from "./components/page/user_experience/Dashboard";
-import "./App.css"; // Import file CSS untuk animasi
+import "./App.css";
 
 const App = () => {
   const location = useLocation();

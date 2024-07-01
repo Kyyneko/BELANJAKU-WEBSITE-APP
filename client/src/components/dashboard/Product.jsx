@@ -55,7 +55,7 @@ const StockBarang = () => {
 
   const handleAddButtonClick = () => {
     setShowModal(true);
-    setSelectedProduct(null); // Clear selected product
+    setSelectedProduct(null);
     setFormData({
       name_product: "",
       description_product: "",
