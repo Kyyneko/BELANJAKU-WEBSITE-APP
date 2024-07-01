@@ -1,24 +1,31 @@
 /* Sidebar.css */
 .sidebar {
-    width: 200px;
-    height: 100vh;
-    position: fixed;
-    background-color: #f4f4f4;
-    padding-top: 20px;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    margin: 10px 0;
-  }
-  
-  .sidebar ul li a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 10px;
-  }
+  width: 220px; /* Increased width for better readability */
+  height: 100vh;
+  position: fixed;
+  background-color: #f7f7f7;
+  padding-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle box-shadow */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 12px 20px; /* Increased padding for better touch/click area */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.sidebar ul li a:hover {
+  background-color: #e2e8f0; /* Lighter background on hover */
+  color: #333; /* Keep text color consistent on hover */
+}

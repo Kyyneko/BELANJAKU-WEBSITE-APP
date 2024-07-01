@@ -135,17 +135,31 @@ def register():
 
     username = data['username']
     email = data['email']
+    address = data['address']
+    hp = data['hp']
     password = data['password']
     confirm_password = data['confirmPassword']
 
     if password != confirm_password:
         return jsonify({'message': 'Passwords do not match'}), 400
 
+    # Check if username or email already exists
+    existing_username = Customer.query.filter_by(username=username).first()
+    existing_email = Customer.query.filter_by(email=email).first()
+
+    if existing_username:
+        return jsonify({'message': 'Username already exists'}), 400
+
+    if existing_email:
+        return jsonify({'message': 'Email already exists'}), 400
+
     hashed_password = generate_password_hash(password)
 
     new_customer = Customer(
         username=username,
         email=email,
+        address=address,
+        hp=hp,
         password=hashed_password
     )
 
@@ -154,7 +168,8 @@ def register():
         db.session.commit()
         return jsonify({'message': 'User registered successfully'}), 201
     except Exception as e:
-        return jsonify({'message': 'Error: {}'.format(e)}), 500
+        return jsonify({'message': f'Error: {e}'}), 500
+
 
 @app.route('/api/products', methods=['GET'])
 @jwt_required()
@@ -305,8 +320,9 @@ def add_order():
 def get_orders_by_user_id(user_id):
     orders = CustomerOrder.query.filter_by(id_customer=user_id).all()
     if not orders:
-        return jsonify({"message": "No orders found for this user"}), 404
+        return jsonify([]), 200  # Mengembalikan array kosong dengan status 200
     return jsonify([order.as_dict() for order in orders])
+
 
 
 @app.route('/api/orders/<int:id_order>', methods=['DELETE'])
@@ -346,6 +362,14 @@ def update_customer(id_customer):
 
     db.session.commit()
     return jsonify(customer.as_dict()), 200
+
+@app.route('/api/customers/<int:id_customer>', methods=['GET'])
+@jwt_required()
+def get_customer(id_customer):
+    print(f"Fetching data for customer ID: {id_customer}")
+    customer = Customer.query.get_or_404(id_customer)
+    return jsonify(customer.as_dict())
+
 
 @app.route('/api/customers/<int:id_customer>', methods=['DELETE'])
 @jwt_required()

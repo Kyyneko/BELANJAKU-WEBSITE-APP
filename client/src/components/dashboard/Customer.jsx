@@ -4,6 +4,7 @@ import axios from "axios";
 const Pelanggan = () => {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true); // State untuk menunjukkan status loading
+  const [searchTerm, setSearchTerm] = useState(""); // State untuk nilai pencarian
 
   useEffect(() => {
     fetchCustomers();
@@ -25,9 +26,27 @@ const Pelanggan = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Filter customers based on username
+  const filteredCustomers = customers.filter((customer) =>
+    customer.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Customers</h2>
+      <div className="flex items-center mb-4">
+        <input
+          type="text"
+          placeholder="Search by username"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+        />
+      </div>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         {loading ? ( // Tampilkan spinner jika sedang loading
           <div className="flex items-center justify-center py-4">
@@ -75,7 +94,7 @@ const Pelanggan = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {customers.map((customer) => (
+              {filteredCustomers.map((customer) => (
                 <tr key={customer.id_customer}>
                   <td className="px-6 py-4 whitespace-nowrap">{customer.id_customer}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{customer.username}</td>

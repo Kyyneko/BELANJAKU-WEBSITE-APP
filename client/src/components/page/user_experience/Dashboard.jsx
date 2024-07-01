@@ -2,10 +2,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "../../dashboard/Sidebar";
-import StokBarang from "../../dashboard/StokBarang";
-import Pesanan from "../../dashboard/Pesanan";
-import Transaksi from "../../dashboard/Transaksi";
-import Pelanggan from "../../dashboard/Pelanggan";
+import Product from "../../dashboard/Product";
+import Order from "../../dashboard/Order";
+import Purchases from "../../dashboard/Purchases";
+import Customer from "../../dashboard/Customer";
 import Category from "../../dashboard/Category";
 import Officer from "../../dashboard/Officer"; // Ubah Officer menjadi OfficerTable sesuai komponen yang dibuat
 import "./Dashboard.css"; // Import file CSS untuk styling dashboard
@@ -16,12 +16,12 @@ const Dashboard = () => {
       <Sidebar />
       <div className="content">
         <Routes>
-          <Route path="/stok-barang" element={<StokBarang />} />
-          <Route path="/pesanan" element={<Pesanan />} />
-          <Route path="/transaksi" element={<Transaksi />} />
-          <Route path="/pelanggan" element={<Pelanggan />} />
-          <Route path="/category" element={<Category />} />
-          <Route path="/officer" element={<Officer />} />
+          <Route path="/list-product" element={<Product />} />
+          <Route path="/list-order" element={<Order />} />
+          <Route path="/list-purchases" element={<Purchases />} />
+          <Route path="/list-customer" element={<Customer />} />
+          <Route path="/list-category" element={<Category />} />
+          <Route path="/list-officer" element={<Officer />} />
         </Routes>
       </div>
     </div>

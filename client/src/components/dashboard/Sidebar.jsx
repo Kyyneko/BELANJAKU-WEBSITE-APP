@@ -12,29 +12,29 @@ const Sidebar = () => {
         {isBoss && (
           <>
             <li>
-              <Link to="/dashboard/transaksi">Transaksi</Link>
+              <Link to="/dashboard/list-purchases">List Purchases</Link>
             </li>
             <li>
-              <Link to="/dashboard/officer">Officer</Link>
+              <Link to="/dashboard/list-officer">List Officer</Link>
             </li>
           </>
         )}
         {isOfficer && (
           <>
             <li>
-              <Link to="/dashboard/stok-barang">Stok Barang</Link>
+              <Link to="/dashboard/list-product">List Product</Link>
             </li>
             <li>
-              <Link to="/dashboard/pesanan">Pesanan</Link>
+              <Link to="/dashboard/list-order">List Order</Link>
             </li>
             <li>
-              <Link to="/dashboard/transaksi">Transaksi</Link>
+              <Link to="/dashboard/list-purchases">List Purchases</Link>
             </li>
             <li>
-              <Link to="/dashboard/pelanggan">Pelanggan</Link>
+              <Link to="/dashboard/list-customer">List Customer</Link>
             </li>
             <li>
-              <Link to="/dashboard/category">Category</Link>
+              <Link to="/dashboard/list-category">List Category Product</Link>
             </li>
           </>
         )}

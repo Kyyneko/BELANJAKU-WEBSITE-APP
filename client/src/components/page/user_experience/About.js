@@ -11,10 +11,12 @@ const About = () => {
           <Col md={8}>
             <h2 className="mb-4">WELCOME TO MARKETPLACE BELANJAKUU</h2>
             <p className="lead mb-4">
-              Intense is an International Financial Planning company with
-              offices in multiple jurisdictions over the world. Working with
-              Intense gives me the ability to advise international expatriates
-              living in the middle east from where I live in USA.
+              Welcome to our best shopping platform, where you can find a wide
+              selection of the latest products at competitive prices and
+              superior customer service. We're committed to providing an easy,
+              fast and secure shopping experience, so you can find the device of
+              your dreams in just a few clicks. Explore our constantly updated
+              collection and enjoy exciting offers you can't miss.
             </p>
             <Link to="/Produk">
               <Button variant="primary" className="explore-button">

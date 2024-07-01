@@ -54,7 +54,7 @@ const Order = () => {
         setProducts(productsData);
       } catch (error) {
         console.error("Error fetching orders or products:", error);
-        setError("Failed to fetch orders or products. Please try again later.");
+        setError("Order Not Found");
       } finally {
         setLoading(false);
       }
@@ -88,15 +88,16 @@ const Order = () => {
 
   if (loading) {
     return (
-      <Container className="order-container" id="order">
-        <h1 className="title text-center mt-4">YOUR ORDERS</h1>
-        <Row className="justify-content-center mt-4">
-          <Col xs={12} sm={8} md={6} className="text-center">
-            <Card className="p-4">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </Card>
+      <Container
+        className="order-container d-flex justify-content-center align-items-center"
+        id="order"
+        style={{ minHeight: "100vh" }}
+      >
+        <Row>
+          <Col xs={12} className="text-center">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
           </Col>
         </Row>
       </Container>
@@ -167,8 +168,11 @@ const Order = () => {
         <Row className="justify-content-center mt-4">
           <Col xs={12} sm={8} md={6} className="text-center">
             <Card className="p-4">
-              <h3>No orders found</h3>
-              <p>You haven't placed any orders yet.</p>
+              <h3>No Orders Found</h3>
+              <p>You do not have any orders yet.</p>
+              <Button variant="primary" href="/produk">
+                Start Shopping
+              </Button>
             </Card>
           </Col>
         </Row>

@@ -17,6 +17,7 @@ const Officer = () => {
   });
   const [loading, setLoading] = useState(true);
   const [selectedOfficerId, setSelectedOfficerId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchOfficers();
@@ -183,12 +184,26 @@ const Officer = () => {
     }
   };
 
+  // Filter officers based on search term
+  const filteredOfficers = officers.filter((officer) =>
+    officer.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div>
+    <div className="mx-5">
       <h2 className="text-2xl font-bold mb-4">Daftar Officer</h2>
-      <Button variant="primary" onClick={handleAddClick} className="mb-3">
-        Tambah Officer
-      </Button>
+      <div className="flex mb-3">
+        <Button variant="primary" onClick={handleAddClick} className="mb-3">
+          Tambah Officer
+        </Button>
+        <input
+          type="text"
+          placeholder="Cari berdasarkan nama..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="ml-auto px-2 py-1 border border-gray-300 rounded-md"
+        />
+      </div>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -208,8 +223,8 @@ const Officer = () => {
               <tr>
                 <td colSpan="8" className="text-center py-4">Loading...</td>
               </tr>
-            ) : (
-              officers.map((officer) => (
+            ) : filteredOfficers.length ? (
+              filteredOfficers.map((officer) => (
                 <tr key={officer.id_officer}>
                   <td className="px-4 py-2 border-b">{officer.id_officer}</td>
                   <td className="px-4 py-2 border-b">{officer.name}</td>
@@ -228,6 +243,10 @@ const Officer = () => {
                   </td>
                 </tr>
               ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center py-4">Tidak ada data ditemukan.</td>
+              </tr>
             )}
           </tbody>
         </table>

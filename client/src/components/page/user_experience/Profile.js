@@ -3,7 +3,7 @@ import { FaInstagram, FaFacebook } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
-import "../../css/user_experince/Profile.css";
+import Swal from "sweetalert2";
 
 const Profile = () => {
   const [customer, setCustomer] = useState(null);
@@ -25,11 +25,16 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(`/api/customers/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      console.log("Token:", token);
+      console.log("UserID:", userId);
+      const response = await axios.get(
+        `http://localhost:5000/api/customers/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setCustomer(response.data);
       setLoading(false);
@@ -37,7 +42,7 @@ const Profile = () => {
       console.error("Error fetching customer data:", error);
       setLoading(false);
       if (error.response && error.response.status === 404) {
-        setErrorMessage("Data not found");
+        setErrorMessage("Data tidak ditemukan");
       } else {
         setErrorMessage("Error fetching customer data");
       }
@@ -46,7 +51,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchCustomerData();
-  }, []); // Empty dependency array to run only once when component mounts
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,16 +65,27 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
-      await axios.put(`/api/customers/${userId}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      await axios.put(
+        `http://localhost:5000/api/customers/${userId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      fetchCustomerData();
+      handleClose();
+      // Show SweetAlert after successful update
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated!",
+        text: "Your profile has been updated successfully.",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
       });
-      fetchCustomerData(); // Fetch updated data after successful update
-      handleClose(); // Close modal after update
     } catch (error) {
       console.error("Error updating customer profile:", error);
-      // Handle error updating profile
     }
   };
 
@@ -85,40 +101,35 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container">
-      <h1 className="titleProfile">Your Profile</h1>
-      {loading && <p>Loading...</p>}
-      {!loading && (
-        <div className="profile-content">
-          <div className="profile-photo-placeholder">
-            {customer && customer.photo ? (
-              <img src={customer.photo} alt="Profile" />
-            ) : (
-              <span>No photo available</span>
-            )}
-          </div>
-          <div className="profile-photo-section">
-            <button className="select-photo-button" onClick={handleEditProfile}>
-              <BsPencilSquare /> Edit Profile
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="social-icons4">
-        <FaInstagram size={30} className="icon" />
-        <FaFacebook size={30} className="icon" />
-        <div className="line"></div>
-        {!loading && customer ? (
-          <div>
-            <p>Name: {customer.username}</p>
-            <p>Email: {customer.email}</p>
-          </div>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-lg mx-auto bg-white rounded-xl shadow-md p-6 space-y-4">
+        <h1 className="text-2xl font-bold text-center">Your Profile</h1>
+        {loading ? (
+          <p className="text-center">Loading...</p>
         ) : (
-          errorMessage && <p>{errorMessage}</p>
+          <div className="space-y-4">
+            <button
+              className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full"
+              onClick={handleEditProfile}
+            >
+              <BsPencilSquare className="mr-2" />
+              Edit Profile
+            </button>
+            <div className="space-y-2">
+              <p className="text-lg font-semibold">Name: {customer.username}</p>
+              <p className="text-lg font-semibold">Email: {customer.email}</p>
+              <p className="text-lg font-semibold">
+                Address: {customer.address}
+              </p>
+              <p className="text-lg font-semibold">Phone: {customer.hp}</p>
+            </div>
+          </div>
+        )}
+        {errorMessage && (
+          <p className="text-red-500 text-center">{errorMessage}</p>
         )}
       </div>
 
-      {/* Modal for editing profile */}
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>

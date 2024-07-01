@@ -16,6 +16,7 @@ const StockBarang = () => {
   });
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchProduk();
@@ -205,15 +206,32 @@ const StockBarang = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProduk = produk.filter((product) =>
+    product.name_product.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">STOCK BARANG</h2>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        onClick={handleAddButtonClick}
-      >
-        Tambah Barang
-      </button>
+      <h2 className="text-2xl font-bold mb-4">Product</h2>
+      <div className="flex mb-4">
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded mr-4"
+          onClick={handleAddButtonClick}
+        >
+          Add Product
+        </button>
+        <input
+          type="text"
+          placeholder="Search product..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+        />
+      </div>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         {loading ? (
           <div className="flex items-center justify-center py-4">
@@ -244,30 +262,30 @@ const StockBarang = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  ID Produk
+                  ID Product
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nama Produk
+                  Product Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Deskripsi Produk
+                  Desc Product
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Harga
+                  Cost
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stok
+                  Stock
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Kategori
+                  Category
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Aksi
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {produk.map((product) => (
+              {filteredProduk.map((product) => (
                 <tr key={product.id_product}>
                   <td className="px-6 py-4 whitespace-nowrap">{product.id_product}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{product.name_product}</td>

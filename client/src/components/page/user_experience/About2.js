@@ -2,6 +2,7 @@ import React from "react";
 import About from "./About";
 import Category from "./Category";
 import Customers from "./Customers";
+import Footer from "./Footer";
 
 const About2 = () => {
   return (
@@ -15,6 +16,7 @@ const About2 = () => {
       <div className="section">
         <Customers />
       </div>
+      <Footer />
     </div>
   );
 };

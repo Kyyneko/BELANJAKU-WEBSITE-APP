@@ -20,14 +20,14 @@ const User = () => {
       <div className="container">
         <div className="content">
           <div className="card">
-            <img src={Customers} alt="user1" />
+            <img src={Customers} alt="Customers" />
             <p>
               <span>Customers</span>
             </p>
             <p>
-              It is not every day that you come across a passionate and
-              trustworthy financial advisor. John Doe is true professional who
-              does his work really well. Thanks John!
+              If you are a shopper looking to browse and purchase products
+              online, this option is for you. Join our community of customers
+              and explore a wide range of products with ease.
             </p>
             <div className="button-container">
               <button className="btn login" onClick={navigateToLogin}>
@@ -39,14 +39,14 @@ const User = () => {
             </div>
           </div>
           <div className="card">
-            <img src={Admin} alt="user2" />
+            <img src={Admin} alt="Admin" />
             <p>
               <span>Admin</span>
             </p>
             <p>
-              In just 2 very short meetings with John he managed to find the
-              solution personally catered to my situation and expectations.
-              Punctual, well informed and very reliable.
+              If you are the owner or manager of this online platform, select
+              this option to manage and oversee operations. Admins have access
+              to advanced features.
             </p>
             <div className="button-container">
               <button className="btn login" onClick={navigateToLogin}>

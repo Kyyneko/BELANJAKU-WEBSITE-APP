@@ -3,7 +3,9 @@ import axios from "axios";
 
 const Pesanan = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // State untuk menunjukkan status loading
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all"); // State untuk filter tanggal
+  const [searchTerm, setSearchTerm] = useState(""); // State untuk nilai pencarian
 
   useEffect(() => {
     fetchOrders();
@@ -18,10 +20,10 @@ const Pesanan = () => {
         },
       });
       setOrders(response.data);
-      setLoading(false); // Setelah data terambil, loading di-set menjadi false
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching orders:", error);
-      setLoading(false); // Jika terjadi error, tetap set loading menjadi false
+      setLoading(false);
     }
   };
 
@@ -29,11 +31,87 @@ const Pesanan = () => {
     return status ? "Completed" : "In Shipping";
   };
 
+  const filterOrders = (order) => {
+    const orderDate = new Date(order.order_date);
+    const today = new Date();
+
+    switch (filter) {
+      case "day":
+        return (
+          orderDate.getDate() === today.getDate() &&
+          orderDate.getMonth() === today.getMonth() &&
+          orderDate.getFullYear() === today.getFullYear()
+        );
+      case "week":
+        const startOfWeek = new Date(today);
+        startOfWeek.setHours(0, 0, 0, 0);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        return orderDate >= startOfWeek && orderDate <= endOfWeek;
+      case "month":
+        return (
+          orderDate.getMonth() === today.getMonth() &&
+          orderDate.getFullYear() === today.getFullYear()
+        );
+      case "last_month":
+        const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        return orderDate >= startOfLastMonth && orderDate <= endOfLastMonth;
+      case "year":
+        return orderDate.getFullYear() === today.getFullYear();
+      case "last_year":
+        const startOfLastYear = new Date(today.getFullYear() - 1, 0, 1);
+        const endOfLastYear = new Date(today.getFullYear() - 1, 11, 31);
+        return orderDate >= startOfLastYear && orderDate <= endOfLastYear;
+      case "all":
+        return true; // Return all orders
+      default:
+        return true;
+    }
+  };
+
+  const handleChangeFilter = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Filter orders based on name and selected date filter
+  const filteredOrders = orders
+    .filter(filterOrders)
+    .filter((order) => order.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <div className="container mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Order</h2>
+      <div className="flex items-center mb-4">
+        <span className="mr-2">Filter:</span>
+        <select
+          value={filter}
+          onChange={handleChangeFilter}
+          className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+        >
+          <option value="all">All</option>
+          <option value="day">This Day</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="last_month">Last Month</option>
+          <option value="year">This Year</option>
+          <option value="last_year">Last Year</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Search by Name"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="ml-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+        />
+      </div>
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        {loading ? ( // Tampilkan spinner jika sedang loading
+        {loading ? (
           <div className="flex items-center justify-center py-4">
             <svg
               className="animate-spin h-5 w-5 mr-3 text-gray-500"
@@ -88,7 +166,7 @@ const Pesanan = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order.id_order}>
                   <td className="px-6 py-4 whitespace-nowrap">{order.id_customer}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{order.name}</td>

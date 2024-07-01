@@ -49,7 +49,7 @@ const Navbar = () => {
 
   const handleProfileClick = () => {
     if (token && isOfficer) {
-      navigate("/dashboard");
+      navigate("/dashboard/stok-barang");
     } else if (token) {
       navigate("/profile");
     } else {

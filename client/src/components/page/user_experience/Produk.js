@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Footer from "./Footer.jsx"; // Sesuaikan path sesuai dengan struktur proyek Anda
 import {
   Modal,
   Button,
@@ -25,8 +26,8 @@ const Produk = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [loading, setLoading] = useState(true); // New state for loading
-  const [isOfficer, setIsOfficer] = useState(false); // State for isOfficer
+  const [loading, setLoading] = useState(true);
+  const [isOfficer, setIsOfficer] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const Produk = () => {
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false); // Set loading to false after products are fetched
+        setLoading(false);
       }
     };
 
@@ -58,11 +59,9 @@ const Produk = () => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
 
-    // Check if user is an officer
     const officerStatus = localStorage.getItem("isOfficer") === "true";
     setIsOfficer(officerStatus);
 
-    // Prevent officers from accessing order modal
     if (officerStatus) {
       setShowModal(false);
     }
@@ -90,7 +89,6 @@ const Produk = () => {
   };
 
   const handleOrder = async () => {
-    // Check if user is not an officer to proceed with the order
     if (isOfficer) {
       Swal.fire({
         icon: "error",
@@ -210,13 +208,16 @@ const Produk = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {loading ? (
-          <div className="text-center">
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "50vh" }}
+          >
             <Spinner animation="border" role="status">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div>
         ) : (
-          <Row xs={1} md={2} lg={3} className="g-4">
+          <Row xs={1} md={2} lg={3} className="g-4 mb-3">
             {filteredProducts.map((product) => (
               <Col key={product.id_product}>
                 <Card
@@ -237,7 +238,7 @@ const Produk = () => {
                       variant="primary"
                       className="block w-full mt-4"
                       onClick={(e) => {
-                        e.stopPropagation(); // Prevent modal from closing
+                        e.stopPropagation();
                         handleProductClick(product);
                       }}
                     >
@@ -330,6 +331,8 @@ const Produk = () => {
           )}
         </Modal.Footer>
       </Modal>
+
+      <Footer />
     </div>
   );
 };

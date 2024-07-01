@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [hp, setHp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -24,6 +26,8 @@ const Register = () => {
       const response = await axios.post("http://localhost:5000/api/register", {
         username,
         email,
+        address,
+        hp,
         password,
         confirmPassword,
       });
@@ -38,7 +42,19 @@ const Register = () => {
         });
       }
     } catch (error) {
-      setMessage(error.response.data.message);
+      if (error.response && error.response.data) {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: error.response.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "An error occurred. Please try again later.",
+        });
+      }
     }
   };
 
@@ -86,6 +102,38 @@ const Register = () => {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="address" className="sr-only">
+                Address
+              </label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                autoComplete="address"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="hp" className="sr-only">
+                No.Hp
+              </label>
+              <input
+                id="hp"
+                name="hp"
+                type="text"
+                autoComplete="hp"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="No.Hp"
+                value={hp}
+                onChange={(e) => setHp(e.target.value)}
               />
             </div>
             <div>

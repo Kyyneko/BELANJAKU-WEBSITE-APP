@@ -1,6 +1,6 @@
 .user {
     width: 100%;
-    background-color: #CD432F;
+    background-color: #f7f7f7;
     display: flex;
     justify-content: center;
     padding: 2rem 0;
@@ -30,7 +30,7 @@
 
 .user .card {
     border: 1px solid #eee;
-    background-color: #CD432F;
+    background-color: grey;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgb(0,0,0,.2);
     padding: 1.5rem;
@@ -71,8 +71,8 @@
 
 .user .btn {
     background-color: white; 
-    color: #CD432F; 
-    border: 1px solid #CD432F; 
+    color: black; 
+    border: 1px solid black; 
     /* padding: 0.5rem 1.5rem; */
     border-radius: 4px;
     cursor: pointer;
@@ -82,7 +82,7 @@
 }
 
 .user .btn:hover {
-    background-color: #CD432F; 
+    background-color: black; 
     color: white; 
 }
 

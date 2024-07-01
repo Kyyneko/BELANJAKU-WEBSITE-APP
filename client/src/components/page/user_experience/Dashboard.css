@@ -1,6 +1,8 @@
 /* Dashboard.css */
 .dashboard-container {
     display: flex;
+    min-height: 95vh;
+    background-color: #c0c0c0;
   }
   
   .content {
