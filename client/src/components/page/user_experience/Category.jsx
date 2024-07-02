@@ -18,9 +18,11 @@ const Category = () => {
               <Card.Body>
                 <Card.Title>Food & Drink</Card.Title>
                 <Card.Text>
-                  It is not every day that you come across a passionate and
-                  trustworthy financial advisor. John Doe is true professional
-                  who does his work really well. Thanks John!
+                Discover our delicious selection of Food & Drink items. 
+                From hearty breakfasts to gourmet treats, our collection 
+                features a variety of mouth-watering options to satisfy your cravings.
+                 Start your day right or indulge in a delightful meal with our top-quality 
+                 food and drink.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -31,9 +33,10 @@ const Category = () => {
               <Card.Body>
                 <Card.Title>Cosmetic</Card.Title>
                 <Card.Text>
-                  In just 2 very short meetings with John he managed to find the
-                  solution personally catered to my situation and expectations.
-                  Punctual, well informed and very reliable.
+                Explore our extensive range of cosmetic products designed to 
+                enhance your beauty. From skincare essentials to luxurious makeup, 
+                our collection has everything you need to look and feel your best. 
+                Discover the latest trends and must-have items in the world of beauty.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -44,10 +47,11 @@ const Category = () => {
               <Card.Body>
                 <Card.Title>Body Care</Card.Title>
                 <Card.Text>
-                  A very professional financial advisor, who is true to his
-                  word. John has demonstrated a high amount of integrity in the
-                  time I have known him, and he is fast to respond to my
-                  concerns.
+                Pamper yourself with our premium body care products.
+                 Our collection includes a variety of lotions, creams, 
+                 and body washes that nourish and rejuvenate your skin. 
+                 Enjoy the ultimate self-care experience with our high-quality 
+                 body care essentials, perfect for every skin type.
                 </Card.Text>
               </Card.Body>
             </Card>

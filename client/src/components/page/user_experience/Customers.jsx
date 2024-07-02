@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import us1 from "../../images/user_experience/us1.jpg";
-import us2 from "../../images/user_experience/us2.jpg";
-import us3 from "../../images/user_experience/us3.jpg";
+import us1 from "../../images/user_experience/cs1.jpg";
+import us2 from "../../images/user_experience/cs2.jpg";
+import us3 from "../../images/user_experience/cs3.jpg";
 import "../../css/user_experince/Customers.css";
 
 const Customers = () => {
@@ -23,11 +23,11 @@ const Customers = () => {
                 />
               </div>
               <Card.Body>
-                <Card.Title>Food & Drink</Card.Title>
+                <Card.Title>Song Joongki</Card.Title>
                 <Card.Text>
-                  It is not every day that you come across a passionate and
-                  trustworthy financial advisor. John Doe is a true professional
-                  who does his work really well. Thanks John!
+                Song Joongki is our model who always looks stylish with our latest 
+                collection. His formal outfit combinations always grab attention and 
+                provide style inspiration.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -43,11 +43,11 @@ const Customers = () => {
                 />
               </div>
               <Card.Body>
-                <Card.Title>Cosmetic</Card.Title>
+                <Card.Title>Ha Ji Won</Card.Title>
                 <Card.Text>
-                  In just 2 very short meetings with John, he managed to find
-                  the solution personally catered to my situation and
-                  expectations. Punctual, well-informed, and very reliable.
+                Ha Ji Won, a fashion icon who always looks chic and elegant with our 
+                collection. Discover a variety of casual to formal clothing options that 
+                will make you look stunning like Ha Ji Won. Find your style with us!
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -63,11 +63,11 @@ const Customers = () => {
                 />
               </div>
               <Card.Body>
-                <Card.Title>Body Care</Card.Title>
+                <Card.Title>kim soo hyun</Card.Title>
                 <Card.Text>
-                  A very professional financial advisor, who is true to his
-                  word. John has demonstrated a high amount of integrity in the
-                  time I have known him.
+                Kim Soo Hyun is the face of our latest collection, showcasing 
+                elegant and classy clothing. With the latest fashion choices, 
+                Kim Soo Hyun always looks captivating.
                 </Card.Text>
               </Card.Body>
             </Card>
